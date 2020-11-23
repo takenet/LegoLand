@@ -19,6 +19,19 @@ Caso esteja disponível, procede com o transbordo do usuário para o atendimento
 
 Aqui deve ser exposta como é feita a comunicação com este componente (qual entrada e qual saida).
 
+### Entrada
+
+O componente espera a entrada no formato de uma string contendo xxxxx, por exemplo:
+
+> exemplo 1
+> exemplo 2
+
+### Saida
+
+O componente retorna para xxxxx com yyyy informação no formato:
+
+> formato de saida (json/string...)
+
 ## Preview
 
 ![fluxo](./transbordo-geolocalizado.svg)

@@ -19,6 +19,32 @@ Para funcionar, depende de banco de dados de fornecedores.
 
 Aqui deve ser exposta como é feita a comunicação com esta skill (qual entrada e qual saida atraves do redirecionamento, seguindo o guideline de router).
 
+### Entrada
+
+A skill espera a entrada no formato
+
+```json
+{
+    "origin": "serviceName from the bot that is redirecting",
+    "destination": "serviceName of the bot you are redireting to",
+    "userInput": "the user's last message",
+    "flow": "someId",
+    "custom": { "field": "value" }
+}
+```
+
+### Saida
+
+A skill retorna para o destino xxxxx com yyyy informação no formato:
+
+```json
+{
+    "origin": "serviceName from the bot that is redirecting",
+    "destination": "serviceName of the bot you are redireting to",
+    "userInput": "the user's last message"
+}
+```
+
 ## Preview
 
 ![fluxo](./agendamento.svg)
