@@ -12,17 +12,23 @@ Legoland é um **repositório de skills e componentes template** que ajuda a ace
 
 Toda e qualquer documentação / boa prática que norteia a construção e a utilização das peças maiores [componentes](Componente) e [skills](#Skill).
 
+[Veja as documentações disponiveis!](./documentações)
+
 ### Componente
 
 ![comps-lego](https://i.imgur.com/HxaWbr5t.png)
 
 Tarefas mínimas independentes que não endereçam diretamente um problema do usuário mas precisam ser executadas para que a [skill](#Skill) funcione.
 
+[Veja os componentes disponiveis!](./componentes)
+
 ### Skill
 
 ![skill-lego](https://i.imgur.com/FJq0PJBt.png)
 
 Tarefas embasadas em `Jobs to Be Done`, orientadas à dores do usuário. Cada skill é um chatbot, o [Contato Inteligente](#contato-inteligente) é composto por várias skills.
+
+[Veja as skills disponiveis!](./skills)
 
 ### Contato Inteligente
 
