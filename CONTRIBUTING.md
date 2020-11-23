@@ -1,4 +1,4 @@
-# Contributing
+#  Contribua com a Legoland
 
 ## Documentações
 
