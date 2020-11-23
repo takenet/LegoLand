@@ -11,4 +11,6 @@ Para funcionar, depende de banco de dados de fornecedores.
 | **Fluxo**   | [.svg](./agendamento.svg)   |
 | **Código**  | [.json](./agendamento.json) |
 
-<img src="https://github.com/takenet/legoland/blob/master/skills/agendamento/agendamento.svg?sanitize=true">
+## Preview
+
+![fluxo](./agendamento.svg)
