@@ -5,7 +5,7 @@ Para funcionar, depende de banco de dados de fornecedores.
 
 | Informações |                             |
 |-------------|-----------------------------|
-| **Versão**  | 1.0                         |
+| **Versão**  | 2.0                         |
 | **Idioma**  | pt-BR                       |
 | **Figma**   | [.fig](./agendamento.fig)   |
 | **Fluxo**   | [.svg](./agendamento.svg)   |
