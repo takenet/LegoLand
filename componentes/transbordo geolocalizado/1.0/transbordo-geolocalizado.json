@@ -1,0 +1,3833 @@
+{
+    "onboarding": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "18bec54c-eace-4ca0-a9fc-3daeff032b10",
+                            "type": "text/plain",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": false,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:24587",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "71cb2aa1-2915-4547-bc9a-10c2c81f5b0a",
+                "$connId": "con_3",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:2641"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:2633"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Origem de transbordo | input.content@origin",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Origem de transbordo",
+                    "action": "{{input.content@origin}}"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:1071",
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "input.content@origin"
+                    }
+                ]
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Set sellerNomenclaturePlural",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run()\n{\n  var resource = \"{{resource.Seller_nomenclature}}\";\n  var nomenclature = resource;\n\n  try\n  {\n    var final = resource.endsWith(\"e\") ? \"s\" : \"es\";\n    return `${nomenclature}${final}`;\n  }\n  catch (ex)\n  {\n    return nomenclature;\n  }\n}",
+                    "inputVariables": [],
+                    "outputVariable": "sellerNomenclaturePlural"
+                },
+                "conditions": []
+            }
+        ],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "onboarding",
+        "root": true,
+        "$position": { "top": "129px", "left": "772px" },
+        "$title": "Início",
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "fallback": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "2a87f9a9-7078-4b4b-a370-5dfe09eaeab6",
+                            "type": "text/plain",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:2300"
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "ExecuteScript",
+                "$title": "Set errorRetry",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(errorRetry) {\n    return parseInt(errorRetry) + 1 || 1;\n}",
+                    "inputVariables": ["errorRetry"],
+                    "outputVariable": "errorRetry"
+                },
+                "conditions": []
+            },
+            {
+                "type": "SetVariable",
+                "$title": "Set jsonError",
+                "$invalid": false,
+                "settings": {
+                    "variable": "jsonError",
+                    "value": "{\"origin\":\"transbordo\",\"destination\":\"#Tratativas\",\"userInput\":\"{{input.content}}\",\"previousStateId\":\"{{state.previous.id}}\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": {
+                        "type": "text/plain",
+                        "value": "{{jsonError}}"
+                    },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "fallback",
+        "$position": { "top": "145px", "left": "1440px" },
+        "$title": "Exceções",
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "485e1f36-7357-423e-a7bb-de1d2464f30c": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "8882e69c-05f2-41ba-8aaf-1617e96d195c",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "8882e69c-05f2-41ba-8aaf-1617e96d195c",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3895"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "a12db160-77b3-49e0-a875-dfd0e7771579",
+                        "type": "text/plain",
+                        "content": "Poxa, desculpe. Nossos {{sellerNomenclaturePlural}} estão offline agora."
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "a12db160-77b3-49e0-a875-dfd0e7771579",
+                            "type": "text/plain",
+                            "content": "Poxa, desculpe. Nossos {{sellerNomenclaturePlural}} estão offline agora."
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3896"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "847184e1-a5ba-492e-a766-58e1e09fe3e9",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:3577",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "c6c3f87c-c742-4f50-8d46-e888d8f222bf",
+                "$connId": "con_8",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:10675"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:10667"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Transbordo fora do horario | Quantidade",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Transbordo fora do horario",
+                    "action": "Quantidade"
+                },
+                "conditions": []
+            },
+            {
+                "type": "SetVariable",
+                "$title": "Set originMsgBusinessHour",
+                "$invalid": false,
+                "settings": {
+                    "value": "outOfHours",
+                    "variable": "originMsgBusinessHour"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Solicitacoes de atendimento | Transbordo fora do horario",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "action": "Transbordo fora do horario | {{contact.name}} | {{placeSelected@name}} | {{whatsappNumber}}",
+                    "category": "Solicitacoes de atendimento"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "485e1f36-7357-423e-a7bb-de1d2464f30c",
+        "root": false,
+        "$title": "Fora do Horário",
+        "$position": { "top": "587px", "left": "276px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "891eab55-33f5-414d-be05-d478e52ccc77": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "997c0158-c455-4f51-a473-ee43dd8bdc3f",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "997c0158-c455-4f51-a473-ee43dd8bdc3f",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4672"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "4c90558f-2782-4635-8ec5-51e1f8bb5e30",
+                        "type": "text/plain",
+                        "content": "Poxa, desculpe. 😥\nOs {{sellerNomenclaturePlural}} da {{resource.Company_unit}} mais próxima estão indisponíveis no momento, mas em breve eles devem retornar."
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "4c90558f-2782-4635-8ec5-51e1f8bb5e30",
+                            "type": "text/plain",
+                            "content": "Poxa, desculpe. 😥\nOs {{sellerNomenclaturePlural}} da {{resource.Company_unit}} mais próxima estão indisponíveis no momento, mas em breve eles devem retornar."
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4673"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "de4ea08b-65cb-4245-abd7-0c30ab15bbd7",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:3994",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "6eaa7dec-88a4-45a4-ad6f-df581f470fc2",
+                "$connId": "con_13",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:31187"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:31178"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Transbordo indisponivel | Quantidade",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Transbordo indisponivel",
+                    "action": "Quantidade"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Solicitacoes de atendimento | Transbordo indisponivel",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Solicitacoes de atendimento",
+                    "action": "Transbordo indisponivel | {{contact.name}} | {{placeSelected@name}} | {{whatsappNumber}}"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "891eab55-33f5-414d-be05-d478e52ccc77",
+        "root": false,
+        "$title": "Sem atendente disponível",
+        "$position": { "top": "735px", "left": "580px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "e1560e80-35a7-49e9-b55c-4e2a9c67e34f": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "73f819c1-c131-44ca-8dc8-06ed4099f56d",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "73f819c1-c131-44ca-8dc8-06ed4099f56d",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5069"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "4dc2cac6-e29f-443d-96d9-be658a7dd458",
+                        "type": "text/plain",
+                        "content": "Ótimo! Já pedi para um {{resource.Seller_nomenclature}} da {{resource.Company_unit}} mais próxima entrar em contato com você. 😁\n\nÉ só aguardar um pouquinho! ⌛"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "4dc2cac6-e29f-443d-96d9-be658a7dd458",
+                            "type": "text/plain",
+                            "content": "Ótimo! Já pedi para um {{resource.Seller_nomenclature}} da {{resource.Company_unit}} mais próxima entrar em contato com você. 😁\n\nÉ só aguardar um pouquinho! ⌛"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5070"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "a2de4ee7-a507-47a4-b1fa-c42ec8a172a6",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:4751",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "desk:6157fd8e-5f25-45be-9517-dbb9872a3d2b",
+                "$connId": "con_18",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:21485"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:21466"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Transbordo efetivo | Quantidade",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Concessionária escolhida": "{{placeSelected@name}}",
+                        "Carro entrada": "{{carModel}}, {{carYear}}",
+                        "Forma de pagamento": "{{payment}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Nome completo": "{{contact.name}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de origem": "{{state.previous.name}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Transbordo efetivo",
+                    "action": "Quantidade"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [
+            {
+                "type": "ProcessHttp",
+                "$title": "Subscribe ticket monitor",
+                "$invalid": false,
+                "settings": {
+                    "headers": { "X-Blip-User": "{{tunnel.identity}}" },
+                    "method": "POST",
+                    "body": "{\n\n}",
+                    "uri": "{{config.apiTicket}}/v1/UserSubscriber/Subscribe?botIdentity={{config.botIdentity}}",
+                    "responseStatusVariable": "ticketSubscribeStatus",
+                    "responseBodyVariable": "ticketSubscribeResponse"
+                },
+                "conditions": []
+            }
+        ],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#2cc3d5",
+                "label": "ProcessHttp",
+                "id": "blip-tag-c43b236b-a1e7-31e8-fe2a-1f63b9e5507a",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "e1560e80-35a7-49e9-b55c-4e2a9c67e34f",
+        "root": false,
+        "$title": "Atendente disponível",
+        "$position": { "top": "867px", "left": "856px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "66c15eff-7099-4c6d-a462-0de7f142808d": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "5e83383c-e319-4693-80d1-af9beecf78df",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "5e83383c-e319-4693-80d1-af9beecf78df",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5832"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "8000a673-e43a-4509-8dbe-ac6ec16b6a4c",
+                        "type": "text/plain",
+                        "content": "Poxa, os {{sellerNomenclaturePlural}} da {{resource.Company_unit}} mais próxima estão descansando neste feriado.\n\nApós o feriado estaremos de volta. 😊"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "8000a673-e43a-4509-8dbe-ac6ec16b6a4c",
+                            "type": "text/plain",
+                            "content": "Poxa, os {{sellerNomenclaturePlural}} da {{resource.Company_unit}} mais próxima estão descansando neste feriado.\n\nApós o feriado estaremos de volta. 😊"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5833"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "6a75e92c-c4f8-4546-b9bb-8bc8e0c85cd0",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:5148",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "c6c3f87c-c742-4f50-8d46-e888d8f222bf",
+                "$connId": "con_23",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:7575"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:7567"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Transbordo feriado | Quantidade",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Transbordo feriado",
+                    "action": "Quantidade"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Solicitacoes de atendimento | Transbordo feriado",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Solicitacoes de atendimento",
+                    "action": "Transbordo feriado | {{contact.name}} | {{placeSelected@name}} | {{whatsappNumber}}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "SetVariable",
+                "$title": "Set originMsgBusinessHour | holiday",
+                "$invalid": false,
+                "settings": {
+                    "variable": "originMsgBusinessHour",
+                    "value": "holiday"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "66c15eff-7099-4c6d-a462-0de7f142808d",
+        "root": false,
+        "$title": "Indisponibilidade Feriado",
+        "$position": { "top": "412px", "left": "1008px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "7feb3a37-0e5a-4f1e-9054-c18231187a55": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "091befad-0e17-4d36-9d2b-9486a769f1ed",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "091befad-0e17-4d36-9d2b-9486a769f1ed",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:7728"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "d1813970-3251-4830-a07e-96ba42d8cc07",
+                        "type": "text/plain",
+                        "content": "Seu atendimento com {{attendantName}} acabou de ser finalizado. 🙂"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "d1813970-3251-4830-a07e-96ba42d8cc07",
+                            "type": "text/plain",
+                            "content": "Seu atendimento com {{attendantName}} acabou de ser finalizado. 🙂"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:7729"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "c251d8ef-e5bf-4efa-a328-3d57376c9e78",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:7044",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "1cd88a06-2732-493d-8ffd-cb9810dba3c9",
+                "$connId": "con_28",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["Tags", "Api"],
+                        "$$hashKey": "object:134908",
+                        "variable": "tipoEncerramento"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:134900"
+            },
+            {
+                "stateId": "e237b49d-0e1c-429b-912a-50038208571d",
+                "$connId": "con_33",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["Normal"],
+                        "$$hashKey": "object:135498",
+                        "variable": "tipoEncerramento"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:135490"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "SetVariable",
+                "$title": "Get Ticket from input.content",
+                "$invalid": false,
+                "settings": {
+                    "variable": "ticket",
+                    "value": "{{input.content}}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "encode Identity",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(ticket) {\n    ticket = JSON.parse(ticket);\n    return encodeURI(ticket.agentIdentity);\n}",
+                    "inputVariables": ["ticket"],
+                    "outputVariable": "encodeIdentity"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Verifica finalização automatica",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(ticket) {\n    try\n    {\n        let json = JSON.parse(ticket);\n        let tags = json.tags;\n\n        if (tags !== null || tags !== \"\" || !tags.isEmpty())\n        {\n            for(var i = 0; i < tags.length; i++){\n                if(tags[i] === \"Inatividade Cliente\") {\n                    return true;\n                }\n            }\n        }\n        return false;\n    }\n    catch (ex)\n    {\n        return false;\n    }\n}",
+                    "inputVariables": ["ticket"],
+                    "outputVariable": "finalizacaoAutomatica"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "set typeTag",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(ticket) {\n    ticket = JSON.parse(ticket);\n    let tags = { semInteracao: false, clienteDuvida: false, testeTake: false }\n    if(ticket.tags){\n        for(var i = 0; i < ticket.tags.length; i++){\n            if(ticket.tags[i] === \"#sem interação\") {\n                tags.semInteracao = true;\n            }\n            else if(ticket.tags[i] === \"#cliente em duvida\") {\n                tags.clienteDuvida = true;\n            }\n            else if(ticket.tags[i] === \"#teste da take\") {\n                tags.testeTake = true;\n            }\n        }\n    }\n    return tags;\n}",
+                    "inputVariables": ["ticket"],
+                    "outputVariable": "typeTag"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Valida tipoEncerramento",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(finalizacaoAutomatica, ticket) {\n    ticket = JSON.parse(ticket);\n    if(finalizacaoAutomatica == true){\n        return 'Api';\n    }\n    else if(ticket.tags){\n        return 'Tags';\n    }\n    else{\n        return 'Normal'\n    }\n}",
+                    "inputVariables": ["finalizacaoAutomatica", "ticket"],
+                    "outputVariable": "tipoEncerramento"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ProcessHttp",
+                "$title": "Get Attendant",
+                "$invalid": false,
+                "settings": {
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": "{{config.key}}"
+                    },
+                    "method": "POST",
+                    "body": "{\n  \"id\": \"{{random.guid}}\",\n  \"to\": \"postmaster@desk.msging.net\",\n  \"method\": \"get\",\n  \"uri\": \"/attendants?$filter=identity%20eq%20'{{encodeIdentity}}'\"\n}",
+                    "uri": "https://msging.net/commands",
+                    "responseStatusVariable": "attendantStatus",
+                    "responseBodyVariable": "attendantResponse"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Set attendantName",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(attendant) {\n    json = JSON.parse(attendant)\n    return json.resource.items[0].fullname;\n}",
+                    "inputVariables": ["attendantResponse"],
+                    "outputVariable": "attendantName"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Validacao encerramento api | Nao",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "action": "Nao",
+                    "category": "Validacao encerramento api"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Validacao tag encerramento | Sem interacao",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Validacao tag encerramento",
+                    "action": "Sem interacao"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:14851",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "typeTag@semInteracao",
+                        "values": ["true"]
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Validacao tag encerramento | Cliente em duvida",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Validacao tag encerramento",
+                    "action": "Cliente em duvida"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:16471",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "typeTag@clienteDuvida",
+                        "values": ["true"]
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Validacao tag encerramento | Teste da take",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Validacao tag encerramento",
+                    "action": "Teste da take"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:17702",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "typeTag@testeTake",
+                        "values": ["true"]
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Validacao tag encerramento | Outras",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Validacao tag encerramento",
+                    "action": "Outras"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:18797",
+                        "source": "context",
+                        "comparison": "notEquals",
+                        "variable": "input.content",
+                        "values": [
+                            "#sem interação",
+                            "#cliente em duvida",
+                            "#teste da take"
+                        ]
+                    },
+                    {
+                        "$$hashKey": "object:19917",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "finalizacaoAutomatica",
+                        "values": ["false"]
+                    }
+                ]
+            }
+        ],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#2cc3d5",
+                "label": "ProcessHttp",
+                "id": "blip-tag-c43b236b-a1e7-31e8-fe2a-1f63b9e5507a",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "7feb3a37-0e5a-4f1e-9054-c18231187a55",
+        "root": false,
+        "$title": "Encerramento Atendimento",
+        "$position": { "top": "1306px", "left": "1036px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "fcf9696d-12e6-4d12-809e-2fb4a1d2447a": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "105afa11-2888-4cf5-ae79-bab02ffaf8c0",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:26670",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "8b541f12-9423-4317-b679-c30c6c9e6508",
+                "$connId": "con_38",
+                "conditions": [
+                    {
+                        "$$hashKey": "object:4660",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "isWorkTime",
+                        "values": ["true"]
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:1213"
+            },
+            {
+                "stateId": "485e1f36-7357-423e-a7bb-de1d2464f30c",
+                "$connId": "con_43",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["false"],
+                        "$$hashKey": "object:3334",
+                        "variable": "isWorkTime"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:3326"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "ExecuteScript",
+                "$title": "Set workSchedule",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run() {\n\ttry\n\t{\n\t\tlet workDays = \"{{resource.Work_days}}\";\n\t\tvar workSchedule = [];\n\t\tvar openingHour = \"\";\n\t\tvar closingHour = \"\";\n\n\t\tvar days = workDays.replace(' ', '').split(\",\");\n\t\tvar num = days[0].match(/(domingo)/gi) ? 0 : 1;\n\t\tfor (var i = 0; i < days.length; i++)\n\t\t{\n\t\t\tvar day = days[i];\n\t\t\tif (day.match(/(s[aá]bado)/gi))\n\t\t\t{\n\t\t\t\topeningHour = \"{{resource.Saturday_opening_hour}}\";\n\t\t\t\tclosingHour = \"{{resource.Saturday_closing_hour}}\";\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\topeningHour = \"{{resource.Working_day_opening_hour}}\";\n\t\t\t\tclosingHour = \"{{resource.Working_day_closing_hour}}\";\n\t\t\t}\n\t\t\t\n\t\t\tworkSchedule.push({ \"num\": num, \"portugueseName\": day, \"workTime\": {\"open\": `${openingHour}`, \"close\": `${closingHour}`}});\n\t\t\tnum++;\n\t\t}\n\t\treturn JSON.stringify(workSchedule);\n\t}\n\tcatch (ex)\n\t{\n\t\treturn \"\";\n\t}\n}",
+                    "inputVariables": [],
+                    "outputVariable": "workSchedule"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Check isWorkTime",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "// Receive the variables as parameters\nfunction run(offset, weekSchedule) {\n  offset = parseInt(offset);\n\n   weekSchedule = JSON.parse(weekSchedule);\n\n  let today = nowUTC(offset);\n\n  if (isWorkDay(today, weekSchedule)) {\n    let todaySchedule = getTodaySchedule(weekSchedule, today);\n    let intervalTime = getIntervalTime(todaySchedule);\n\n    return checkTime(intervalTime, today);\n  }\n\n  return false;\n}\n\nfunction getIntervalTime(todaySchedule) {\n  let intervalTime = [];\n  intervalTime.push({\n    start: utcDate(todaySchedule.workTime.open),\n    end: utcDate(todaySchedule.workTime.close)\n  });\n\n  return intervalTime;\n}\n\nfunction checkTime(intervalTime, today) {\n  for (let i = 0; i < intervalTime.length; i++) {\n    if (today - intervalTime[i].start > 0 && intervalTime[i].end - today > 0)\n      return true;\n  }\n  return false;\n}\n\nfunction getTodaySchedule(weekSchedule, today) {\n  for (let i = 0; i < weekSchedule.length; i++) {\n    if (weekSchedule[i].num == today.getDay()) return weekSchedule[i];\n  }\n}\n\n//Get now UTC Date\nfunction nowUTC(offset) {\n  let now = new Date();\n  let utc_timestamp = Date.UTC(\n    now.getUTCFullYear(),\n    now.getUTCMonth(),\n    now.getUTCDate(),\n    now.getUTCHours(),\n    now.getUTCMinutes(),\n    now.getUTCSeconds(),\n    now.getUTCMilliseconds()\n  );\n\n  return new Date(utc_timestamp + offset * 3600 * 1000);\n}\n\n//Get UTC Date\nfunction utcDate(timeString) {\n  let now = new Date();\n\n  let hour = getValueByString(\"hour\", timeString);\n  let minutes = getValueByString(\"minutes\", timeString);\n\n  let utc_timestamp = Date.UTC(\n    now.getUTCFullYear(),\n    now.getUTCMonth(),\n    now.getUTCDate(),\n    hour,\n    minutes,\n    0,\n    0\n  );\n  return new Date(utc_timestamp);\n}\n\n//Get hour/minute by string with pattern HH:mm\nfunction getValueByString(type, timeString) {\n  if (type === \"hour\") {\n    return parseInt(timeString.substring(0, timeString.indexOf(\":\")));\n  } else if (type === \"minutes\") {\n    return parseInt(\n      timeString.substring(timeString.indexOf(\":\") + 1, timeString.length)\n    );\n  }\n\n  return 0;\n}\n\n//Get if today is a work day\nfunction isWorkDay(today, workDays) {\n  for (let i = 0; i < workDays.length; i++) {\n    if (workDays[i].num == today.getDay().toString()) return true;\n  }\n  return false;\n}",
+                    "inputVariables": ["config.dateTimeOffSet", "workSchedule"],
+                    "outputVariable": "isWorkTime"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Transbordo dentro do horario | Dentro do horario",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Transbordo dentro do horario",
+                    "action": "Dentro do horario"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:4385",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "isWorkTime",
+                        "values": ["true"]
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Transbordo dentro do horario | Fora do horario",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Transbordo dentro do horario",
+                    "action": "Fora do horario"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:5606",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "isWorkTime",
+                        "values": ["false"]
+                    }
+                ]
+            }
+        ],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "fcf9696d-12e6-4d12-809e-2fb4a1d2447a",
+        "root": false,
+        "$title": "Valida Horário de Atendimento",
+        "$position": { "top": "420px", "left": "506px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "8b541f12-9423-4317-b679-c30c6c9e6508": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "7de15f23-9cba-47ac-9f69-19ba38d7469f",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:7152",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "bd2bd835-c532-4c52-931e-fc6f5d6bf546",
+                "$connId": "con_48",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "notEquals",
+                        "values": ["false"],
+                        "$$hashKey": "object:28465",
+                        "variable": "hasAttendant"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:28456"
+            },
+            {
+                "stateId": "891eab55-33f5-414d-be05-d478e52ccc77",
+                "$connId": "con_53",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["false"],
+                        "$$hashKey": "object:28952",
+                        "variable": "hasAttendant"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:28944"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "ProcessHttp",
+                "$title": "Checa se possui atendente disponível",
+                "$invalid": false,
+                "settings": {
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": "{{config.key}}"
+                    },
+                    "method": "POST",
+                    "body": "{\n  \"id\": \"{{random.guid}}\",\n  \"to\": \"postmaster@desk.msging.net\",\n  \"method\": \"get\",\n  \"uri\": \"/attendants\"\n}",
+                    "uri": "https://msging.net/commands",
+                    "responseStatusVariable": "checkAgentAvailabilityStatus",
+                    "responseBodyVariable": "checkAgentAvailabilityResponse"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Checa se há atendente disponível",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(result, team) {\n    var hasAttendant = false;\n    try\n    {\n        result = JSON.parse(result);\n        team = JSON.parse(team);\n\n        if(result.resource && result.resource.total >= 1){\n            hasAttendant  = result.resource.items.some(function(attendant){\n                if (attendant.status === 'Online' && attendant.teams.includes(team.name)){\n                    return true;\n                }\n            });\n        }\n        return hasAttendant;\n    }\n    catch (ex)\n    {\n        return hasAttendant;\n    }\n}",
+                    "inputVariables": [
+                        "checkAgentAvailabilityResponse",
+                        "placeSelected"
+                    ],
+                    "outputVariable": "hasAttendant"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Disponibilidade de atendimento | Atendentes disponiveis",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Disponibilidade de atendimento",
+                    "action": "Atendentes disponiveis"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:3582",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "hasAttendant",
+                        "values": ["true"]
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Disponibilidade de atendimento | Atendentes nao disponiveis",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Disponibilidade de atendimento",
+                    "action": "Atendentes nao disponiveis"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:4409",
+                        "values": ["false"],
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "hasAttendant"
+                    }
+                ]
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#2cc3d5",
+                "label": "ProcessHttp",
+                "id": "blip-tag-c43b236b-a1e7-31e8-fe2a-1f63b9e5507a",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "8b541f12-9423-4317-b679-c30c6c9e6508",
+        "root": false,
+        "$title": "Valida Disponibilidade Atendente",
+        "$position": { "top": "581px", "left": "719px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "desk:6157fd8e-5f25-45be-9517-dbb9872a3d2b": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": false,
+                    "conditions": [
+                        {
+                            "source": "context",
+                            "variable": "helpDeskHasTicket",
+                            "comparison": "equals",
+                            "values": ["true"]
+                        }
+                    ],
+                    "$cardContent": {
+                        "document": {
+                            "id": "bfc67e5b-3b3e-4245-a04c-1c5bea5de204",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:14671",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "$isDeskOutput": true,
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "input.type",
+                        "comparison": "equals",
+                        "values": ["application/vnd.iris.ticket+json"]
+                    },
+                    {
+                        "source": "context",
+                        "variable": "input.content@status",
+                        "comparison": "equals",
+                        "values": ["ClosedAttendant"]
+                    }
+                ],
+                "$$hashKey": "object:14692",
+                "$invalid": false,
+                "stateId": "8dcd75fe-393a-4e67-bf15-e17e954496d6",
+                "$connId": "con_58"
+            },
+            {
+                "$isDeskOutput": true,
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "input.type",
+                        "comparison": "equals",
+                        "values": ["application/vnd.iris.ticket+json"]
+                    },
+                    {
+                        "source": "context",
+                        "variable": "input.content@status",
+                        "comparison": "equals",
+                        "values": ["ClosedClient"]
+                    }
+                ],
+                "$$hashKey": "object:14693",
+                "$invalid": false,
+                "stateId": "8dcd75fe-393a-4e67-bf15-e17e954496d6",
+                "$connId": "con_63"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "ExecuteScript",
+                "$title": "GetEncodedContactIdentity",
+                "$invalid": false,
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "state.previous.id",
+                        "comparison": "notEquals",
+                        "values": ["desk:6157fd8e-5f25-45be-9517-dbb9872a3d2b"]
+                    }
+                ],
+                "settings": {
+                    "function": "run",
+                    "source": "function run(identity) {\n return (identity !== undefined) ? encodeURIComponent(identity) : identity;\n}",
+                    "inputVariables": ["input.message.fromidentity"],
+                    "outputVariable": "helpDeskEncodedFromIdentity"
+                }
+            },
+            {
+                "type": "ProcessCommand",
+                "$title": "GetOpenTicket",
+                "$invalid": false,
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "state.previous.id",
+                        "comparison": "notEquals",
+                        "values": ["desk:6157fd8e-5f25-45be-9517-dbb9872a3d2b"]
+                    }
+                ],
+                "settings": {
+                    "from": "{{application.identifier}}@{{application.domain}}",
+                    "to": "postmaster@desk.msging.net",
+                    "method": "get",
+                    "uri": "/tickets?$filter=customerIdentity%20eq%20%27{{helpDeskEncodedFromIdentity}}%27%20and%20%28status%20eq%20%27Open%27%20or%20status%20eq%20%27Waiting%27%20or%20status%20eq%20%27Assigned%27%29",
+                    "metadata": { "server.shouldStore": true },
+                    "variable": "helpDeskGetOpenTicketCommandResponse"
+                }
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "TreatGetOpenTicketResponse",
+                "$invalid": false,
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "state.previous.id",
+                        "comparison": "notEquals",
+                        "values": ["desk:6157fd8e-5f25-45be-9517-dbb9872a3d2b"]
+                    }
+                ],
+                "settings": {
+                    "function": "run",
+                    "source": "function run(commandResponse) {\n    var response = JSON.parse(commandResponse)\n    var ticketExists = (response && response.resource && response.resource.items && response.resource.items.length > 0);\n  return ticketExists ? \"true\" : \"false\";\n}",
+                    "inputVariables": ["helpDeskGetOpenTicketCommandResponse"],
+                    "outputVariable": "helpDeskHasTicket"
+                }
+            },
+            {
+                "type": "ProcessCommand",
+                "$title": "OpenTicketIfNotFound",
+                "$invalid": false,
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "helpDeskHasTicket",
+                        "comparison": "notEquals",
+                        "values": ["true"]
+                    }
+                ],
+                "settings": {
+                    "from": "{{application.identifier}}@{{application.domain}}",
+                    "to": "postmaster@desk.msging.net",
+                    "method": "set",
+                    "uri": "/tickets/{{helpDeskEncodedFromIdentity}}",
+                    "variable": "helpDeskOpenTicketCommandResponse",
+                    "type": "text/plain",
+                    "resource": "{{input.content}}",
+                    "metadata": { "server.shouldStore": true }
+                }
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "TreatOpenTicketResponse",
+                "$invalid": false,
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "helpDeskHasTicket",
+                        "comparison": "notEquals",
+                        "values": ["true"]
+                    }
+                ],
+                "settings": {
+                    "function": "run",
+                    "source": "function run(commandResponse) {\n    var response = commandResponse ? JSON.parse(commandResponse) : {}\n    var ticketExists = response && response.type === \"application/vnd.iris.ticket+json\" && response.resource \n    return ticketExists ? \"true\" : \"false\";\n}",
+                    "inputVariables": ["helpDeskOpenTicketCommandResponse"],
+                    "outputVariable": "helpDeskHasTicket"
+                }
+            },
+            {
+                "type": "ForwardMessageToDesk",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "helpDeskHasTicket",
+                        "comparison": "equals",
+                        "values": ["true"]
+                    }
+                ],
+                "settings": {},
+                "$invalid": false
+            }
+        ],
+        "$leavingCustomActions": [
+            {
+                "type": "SetVariable",
+                "$title": "ResetHasTicket",
+                "$invalid": false,
+                "conditions": [
+                    {
+                        "source": "context",
+                        "variable": "input.type",
+                        "comparison": "equals",
+                        "values": ["application/vnd.iris.ticket+json"]
+                    },
+                    {
+                        "source": "context",
+                        "variable": "input.content@status",
+                        "comparison": "equals",
+                        "values": ["ClosedAttendant", "ClosedClient"]
+                    }
+                ],
+                "settings": {
+                    "variable": "helpDeskHasTicket",
+                    "value": "false",
+                    "$invalid": false
+                }
+            }
+        ],
+        "$inputSuggestions": [],
+        "$defaultOutput": {
+            "stateId": "desk:6157fd8e-5f25-45be-9517-dbb9872a3d2b",
+            "$invalid": false
+        },
+        "$tags": [
+            {
+                "background": "#232d11",
+                "label": "User Input",
+                "id": "blip-tag-ba80e21e-7e32-11e9-8f9e-2a86e4085a59",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "desk:6157fd8e-5f25-45be-9517-dbb9872a3d2b",
+        "root": false,
+        "$title": "Atendimento humano",
+        "$position": { "top": "1006px", "left": "858px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "b53b3c33-7dfa-4ef8-b06a-cc4ee4c41adb": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "1ebd1ed0-de9a-4387-b5cf-f368a56f9aed",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:25835",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "SetVariable",
+                "$title": "Set errorRetry = 0",
+                "$invalid": false,
+                "settings": { "variable": "errorRetry", "value": "0" },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": {
+                        "type": "text/plain",
+                        "value": "{\"origin\":\"transbordo\",\"destination\":\"finalizacao\",\"destinationFlow\":\"F.1.0.2\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                    },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "b53b3c33-7dfa-4ef8-b06a-cc4ee4c41adb",
+        "root": false,
+        "$title": "Redireciona Finalização #F.1.0.2",
+        "$position": { "top": "1097px", "left": "1439px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "1cd88a06-2732-493d-8ffd-cb9810dba3c9": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "97d72f2e-45c4-43a3-92c5-4b716eed1637",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:24397",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "SetVariable",
+                "$title": "Set errorRetry = 0",
+                "$invalid": false,
+                "settings": { "variable": "errorRetry", "value": "0" },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": {
+                        "type": "text/plain",
+                        "value": "{\"origin\":\"transbordo\",\"destination\":\"finalizacao\",\"destinationFlow\":\"F.1.0.3\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                    },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "1cd88a06-2732-493d-8ffd-cb9810dba3c9",
+        "root": false,
+        "$title": "Redireciona Finalização #F.1.0.3",
+        "$position": { "top": "1256px", "left": "1439px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "e237b49d-0e1c-429b-912a-50038208571d": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "450f61c7-d1a2-4e40-a659-faa73fa1866f",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:24768",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "SetVariable",
+                "$title": "Set errorRetry = 0",
+                "$invalid": false,
+                "settings": { "value": "0", "variable": "errorRetry" },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": {
+                        "type": "text/plain",
+                        "value": "{\"origin\":\"transbordo\",\"destination\":\"finalizacao\",\"destinationFlow\":\"F.1.0.1\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                    },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "e237b49d-0e1c-429b-912a-50038208571d",
+        "root": false,
+        "$title": "Redireciona Finalização #F.1.0.1",
+        "$position": { "top": "947px", "left": "1439px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "a3f61c17-2e0c-48d9-8768-863c9f106e23": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "77747e2e-cb88-4c17-9159-5b9972debb51",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "77747e2e-cb88-4c17-9159-5b9972debb51",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:22262"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "b774b928-725a-4b2a-91b7-93936bb596d7",
+                        "type": "text/plain",
+                        "content": "Deseja tentar um atendimento com outra {{resource.Company_unit}}? 🙂\n\n*1* - Sim\n*2* - Não"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "b774b928-725a-4b2a-91b7-93936bb596d7",
+                            "type": "text/plain",
+                            "content": "Deseja tentar um atendimento com outra {{resource.Company_unit}}? 🙂\n\n*1* - Sim\n*2* - Não"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:22263"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "b22fb583-40e8-415e-b082-3ffbcbfb2eda",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:2671",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "b7c7ed7f-2324-426c-8f4e-2e4d6d46f8c3",
+                "$connId": "con_68",
+                "conditions": [
+                    {
+                        "source": "intent",
+                        "comparison": "equals",
+                        "values": ["Sair"],
+                        "$$hashKey": "object:1582"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:1574"
+            },
+            {
+                "stateId": "512db791-b7e8-4c9a-be1f-70b1f56a0211",
+                "$connId": "con_73",
+                "conditions": [
+                    {
+                        "source": "intent",
+                        "comparison": "equals",
+                        "values": ["Falar com um atendente"],
+                        "$$hashKey": "object:1606"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:1598"
+            },
+            {
+                "stateId": "134c668c-151d-4823-a596-76f3cc1d7454",
+                "$connId": "con_78",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "notEquals",
+                        "values": ["text/plain"],
+                        "$$hashKey": "object:3152",
+                        "variable": "input.type"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:3144"
+            },
+            {
+                "stateId": "b53b3c33-7dfa-4ef8-b06a-cc4ee4c41adb",
+                "$connId": "con_83",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["Nao"],
+                        "$$hashKey": "object:13684",
+                        "variable": "tryAnotherUnit"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:13675"
+            },
+            {
+                "stateId": "3452df73-a75e-4eed-b482-e53237904ecf",
+                "$connId": "con_88",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["Sim"],
+                        "$$hashKey": "object:20139",
+                        "variable": "tryAnotherUnit"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:20131"
+            },
+            {
+                "stateId": "31007ccd-0be6-4f2f-9379-8c78c32b2a83",
+                "$connId": "con_93",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:4475"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:4467"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [
+            {
+                "type": "ProcessHttp",
+                "$title": "Get smallTalks",
+                "$invalid": false,
+                "settings": {
+                    "headers": {},
+                    "method": "GET",
+                    "uri": "{{config.apiSmalltalks}}?text={{input.content}}",
+                    "responseStatusVariable": "getSmalltalksStatus",
+                    "responseBodyVariable": "getSmalltalksResponse"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Set tryAnotherUnit",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(response, input) {\n    let yes = [\"Consent\", \"Confirmation\", \"Compliment\"];\n\tlet no = [\"Confusion\", \"Disagreement\", \"Frustation\", \"Negation\"];\n    \n    var optionYes = \"Sim\";\n    var optionNo = \"Nao\";\n    var result = \"Input inesperado\";\n    \n    try\n    {\n        if (typeof response === \"string\")\n        {\n            response = JSON.parse(response); \n        }       \n        response = response.analysis.matches[0];\n\n        if (response)\n        {\t\t\t\n            if (yes.indexOf(response.smallTalk) > -1)\n            {\n                result = optionYes;\n            }\n            else if (no.indexOf(response.smallTalk) > -1)\n            {\n                result = optionNo;\n            }\n        }\n        else\n        {\n            if (input.match(/^(((op|op[cç])([cç][aâãáà]o)?)?\\s*(1|(um))|(1|(um))?\\s*(\\-)?\\s*((^s(im)?)|(^claro)|(^desejo)))/gi) != null)\n            {\n                result = optionYes;\n            }\n            else if (input.match(/^(((op|op[cç])([cç][aâãáà]o)?)?\\s*(2|(dois))|(2|(dois))?\\s*(\\-)?\\s*((^n([aã]o)?)|(^passo)|(^deixa)))/gi) != null)\n            {\n                result = optionNo;\n            }\n        }\n        \n        return result;\n    }\n    catch(ex)\n    {\n        return result;\n    }\n}",
+                    "inputVariables": [
+                        "getSmalltalksResponse",
+                        "input.content"
+                    ],
+                    "outputVariable": "tryAnotherUnit"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Tentativa atendimento outro atendimento | tryAnotherUnit",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Tentativa atendimento outro atendimento",
+                    "action": "{{tryAnotherUnit}}"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:12795",
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "tryAnotherUnit"
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Tentativa atendimento outro atendimento input | input.content",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Tentativa atendimento outro atendimento input",
+                    "action": "{{input.content}}"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:9294",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "tryAnotherUnit",
+                        "values": ["Input inesperado"]
+                    }
+                ]
+            }
+        ],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#2cc3d5",
+                "label": "ProcessHttp",
+                "id": "blip-tag-c43b236b-a1e7-31e8-fe2a-1f63b9e5507a",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#232d11",
+                "label": "User Input",
+                "id": "blip-tag-ba80e21e-7e32-11e9-8f9e-2a86e4085a59",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "a3f61c17-2e0c-48d9-8768-863c9f106e23",
+        "root": false,
+        "$title": "Atendimento com outra loja",
+        "$position": { "top": "885px", "left": "275px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "3452df73-a75e-4eed-b482-e53237904ecf": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "63dfcd0e-6a6d-48d9-af48-3893420af025",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:17801",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "SetVariable",
+                "$title": "Set errorRetry = 0",
+                "$invalid": false,
+                "settings": { "variable": "errorRetry", "value": "0" },
+                "conditions": []
+            },
+            {
+                "type": "SetVariable",
+                "$title": "Set jsonGeo",
+                "$invalid": false,
+                "settings": {
+                    "variable": "jsonGeo",
+                    "value": "{\"origin\":\"transbordo\",\"destination\":\"geolocalizacao\",\"destinationFlow\":\"A.2.3.0\",\"userInput\":\"{{input.content}}\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": { "type": "text/plain", "value": "{{jsonGeo}}" },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "3452df73-a75e-4eed-b482-e53237904ecf",
+        "root": false,
+        "$title": "Redireciona Geolocalização #A.2.3.0",
+        "$position": { "top": "1409px", "left": "1439px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "31007ccd-0be6-4f2f-9379-8c78c32b2a83": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "b81ee247-2737-4598-8d65-e79d81578124",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:6034",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "ExecuteScript",
+                "$title": "Set errorRetry",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(errorRetry) {\n    return parseInt(errorRetry) + 1 || 1;\n}",
+                    "inputVariables": ["errorRetry"],
+                    "outputVariable": "errorRetry"
+                },
+                "conditions": []
+            },
+            {
+                "type": "SetVariable",
+                "$title": "Set jsonInput",
+                "$invalid": false,
+                "settings": {
+                    "variable": "jsonInput",
+                    "value": "{\"origin\":\"transbordo\",\"destination\":\"#Tratativas\",\"destinationFlow\": \"confirmation\",\"userInput\":\"{{input.content}}\",\"previousStateId\":\"{{state.previous.id}}\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": {
+                        "type": "text/plain",
+                        "value": "{{jsonInput}}"
+                    },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "31007ccd-0be6-4f2f-9379-8c78c32b2a83",
+        "root": false,
+        "$title": "Redireciona Input inesperado - Afirmativa/Negativa",
+        "$position": { "top": "770px", "left": "1439px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "c6c3f87c-c742-4f50-8d46-e888d8f222bf": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "5e83383c-e319-4693-80d1-af9beecf78df",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "5e83383c-e319-4693-80d1-af9beecf78df",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5768"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "8000a673-e43a-4509-8dbe-ac6ec16b6a4c",
+                        "type": "text/plain",
+                        "content": "⏰ Nosso horário de atendimento é: \n*segunda* a *sexta* *{{resource.Working_day_opening_hour}} às {{resource.Working_day_closing_hour}}*\n*sábado* *{{resource.Saturday_opening_hour}} às {{resource.Saturday_closing_hour}}*\n*domingo*\n{{resource.Sunday_opening_hour}} às {{resource.Sunday_closing_hour}}*",
+                        "metadata": {}
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "8000a673-e43a-4509-8dbe-ac6ec16b6a4c",
+                            "type": "text/plain",
+                            "content": "⏰ Nosso horário de atendimento é: \n*segunda* a *sexta* *{{resource.Working_day_opening_hour}} às {{resource.Working_day_closing_hour}}*\n*sábado* *{{resource.Saturday_opening_hour}} às {{resource.Saturday_closing_hour}}*\n*domingo*\n{{resource.Sunday_opening_hour}} às {{resource.Sunday_closing_hour}}*"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5769"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "6a75e92c-c4f8-4546-b9bb-8bc8e0c85cd0",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5770"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "6eaa7dec-88a4-45a4-ad6f-df581f470fc2",
+                "$connId": "con_98",
+                "conditions": [
+                    {
+                        "$$hashKey": "object:4271",
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "originMsgBusinessHour",
+                        "values": ["outOfHours"]
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:5960"
+            },
+            {
+                "stateId": "b53b3c33-7dfa-4ef8-b06a-cc4ee4c41adb",
+                "$connId": "con_103",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["holiday"],
+                        "$$hashKey": "object:7928",
+                        "variable": "originMsgBusinessHour"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:7920"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "c6c3f87c-c742-4f50-8d46-e888d8f222bf",
+        "root": false,
+        "$title": "Horário atendimento",
+        "$position": { "top": "572px", "left": "1009px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "6eaa7dec-88a4-45a4-ad6f-df581f470fc2": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "6a75e92c-c4f8-4546-b9bb-8bc8e0c85cd0",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:14510"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "a3f61c17-2e0c-48d9-8768-863c9f106e23",
+                "$connId": "con_108",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "greaterThan",
+                        "variable": "placesQuantity",
+                        "values": ["1"],
+                        "$$hashKey": "object:14726"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:14700"
+            },
+            {
+                "stateId": "b53b3c33-7dfa-4ef8-b06a-cc4ee4c41adb",
+                "$connId": "con_113",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "lessThan",
+                        "variable": "placesQuantity",
+                        "values": ["2"],
+                        "$$hashKey": "object:14773"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:14701"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Solicitacoes de atendimento | Fora do horario",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Solicitacoes de atendimento",
+                    "action": "Fora do horario | {{contact.name}} | {{placeSelected@name}} | {{whatsappNumber}}"
+                },
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "contact.name",
+                        "$$hashKey": "object:17275"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "placeSelected@name",
+                        "$$hashKey": "object:17276"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "whatsappNumber",
+                        "$$hashKey": "object:17277"
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Validacao atendimento lojas proximas | Sim",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Validacao atendimento lojas proximas",
+                    "action": "Sim"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:17508",
+                        "source": "context",
+                        "comparison": "greaterThan",
+                        "variable": "placesQuantity",
+                        "values": ["1"]
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Validacao atendimento lojas proximas | Nao",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Validacao atendimento lojas proximas",
+                    "action": "Nao"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:18353",
+                        "values": ["2"],
+                        "comparison": "lessThan",
+                        "source": "context",
+                        "variable": "placesQuantity"
+                    }
+                ]
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "6eaa7dec-88a4-45a4-ad6f-df581f470fc2",
+        "root": false,
+        "$title": "Verifica outras lojas próximas",
+        "$position": { "top": "729px", "left": "275px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "bd2bd835-c532-4c52-931e-fc6f5d6bf546": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "77747e2e-cb88-4c17-9159-5b9972debb51",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "77747e2e-cb88-4c17-9159-5b9972debb51",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:33551"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "b774b928-725a-4b2a-91b7-93936bb596d7",
+                        "type": "text/plain",
+                        "content": "Deseja iniciar um atendimento com um {{resource.Seller_nomenclature}}?\n\n*1* - Sim\n*2* - Não"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "b774b928-725a-4b2a-91b7-93936bb596d7",
+                            "type": "text/plain",
+                            "content": "Deseja iniciar um atendimento com um {{resource.Seller_nomenclature}}?\n\n*1* - Sim\n*2* - Não"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:33552"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "b22fb583-40e8-415e-b082-3ffbcbfb2eda",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:33553"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "b7c7ed7f-2324-426c-8f4e-2e4d6d46f8c3",
+                "$connId": "con_118",
+                "conditions": [
+                    {
+                        "source": "intent",
+                        "comparison": "equals",
+                        "values": ["Sair"],
+                        "$$hashKey": "object:2317"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:2309"
+            },
+            {
+                "stateId": "512db791-b7e8-4c9a-be1f-70b1f56a0211",
+                "$connId": "con_123",
+                "conditions": [
+                    {
+                        "source": "intent",
+                        "comparison": "equals",
+                        "values": ["Falar com um atendente"],
+                        "$$hashKey": "object:2341"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:2333"
+            },
+            {
+                "stateId": "134c668c-151d-4823-a596-76f3cc1d7454",
+                "$connId": "con_128",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "notEquals",
+                        "values": ["text/plain"],
+                        "$$hashKey": "object:5083",
+                        "variable": "input.type"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:5075"
+            },
+            {
+                "stateId": "b53b3c33-7dfa-4ef8-b06a-cc4ee4c41adb",
+                "$connId": "con_133",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["Nao"],
+                        "variable": "userInput",
+                        "$$hashKey": "object:33775"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:33750"
+            },
+            {
+                "stateId": "e1560e80-35a7-49e9-b55c-4e2a9c67e34f",
+                "$connId": "con_138",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["Sim"],
+                        "variable": "userInput",
+                        "$$hashKey": "object:33802"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:33751"
+            },
+            {
+                "stateId": "31007ccd-0be6-4f2f-9379-8c78c32b2a83",
+                "$connId": "con_143",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:33829"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:33752"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [
+            {
+                "type": "ProcessHttp",
+                "$title": "Get smallTalks",
+                "$invalid": false,
+                "settings": {
+                    "headers": {},
+                    "method": "GET",
+                    "uri": "{{config.apiSmalltalks}}?text={{input.content}}",
+                    "responseStatusVariable": "getSmalltalksStatus",
+                    "responseBodyVariable": "getSmalltalksResponse"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Set userInput",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(response, input) {\n    let yes = [\"Consent\", \"Confirmation\", \"Compliment\"];\n\tlet no = [\"Confusion\", \"Disagreement\", \"Frustation\", \"Negation\"];\n    \n    var optionYes = \"Sim\";\n    var optionNo = \"Nao\";\n    var result = \"Input inesperado\";\n    \n    try\n    {\n        if (typeof response === \"string\")\n        {\n            response = JSON.parse(response); \n        }       \n        response = response.analysis.matches[0];\n\n        if (response)\n        {\t\t\t\n            if (yes.indexOf(response.smallTalk) > -1)\n            {\n                result = optionYes;\n            }\n            else if (no.indexOf(response.smallTalk) > -1)\n            {\n                result = optionNo;\n            }\n        }\n        else\n        {\n            if (input.match(/^(((op|op[cç])([cç][aâãáà]o)?)?\\s*(1|(um))|(1|(um))?\\s*(\\-)?\\s*((^s(im)?)|(^claro)|(^desejo)))/gi) != null)\n            {\n                result = optionYes;\n            }\n            else if (input.match(/^(((op|op[cç])([cç][aâãáà]o)?)?\\s*(2|(dois))|(2|(dois))?\\s*(\\-)?\\s*((^n([aã]o)?)|(^passo)|(^deixa)))/gi) != null)\n            {\n                result = optionNo;\n            }\n        }\n        \n        return result;\n    }\n    catch(ex)\n    {\n        return result;\n    }\n}",
+                    "inputVariables": [
+                        "getSmalltalksResponse",
+                        "input.content"
+                    ],
+                    "outputVariable": "userInput"
+                },
+                "conditions": [
+                    {
+                        "values": ["200"],
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "getSmalltalksStatus",
+                        "$$hashKey": "object:1102"
+                    }
+                ]
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Confirmacao inicio atendimento exibicao | Quantidade",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Confirmacao inicio atendimento exibicao",
+                    "action": "Quantidade"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Confirmacao inicio atendimento selecao | userInput",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Confirmacao inicio atendimento selecao",
+                    "action": "{{userInput}}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Confirmacao inicio atendimento input | input.content",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Confirmacao inicio atendimento input",
+                    "action": "{{input.content}}"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:8105",
+                        "values": ["Input inesperado"],
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "userInput"
+                    }
+                ]
+            }
+        ],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#2cc3d5",
+                "label": "ProcessHttp",
+                "id": "blip-tag-c43b236b-a1e7-31e8-fe2a-1f63b9e5507a",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#232d11",
+                "label": "User Input",
+                "id": "blip-tag-ba80e21e-7e32-11e9-8f9e-2a86e4085a59",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "bd2bd835-c532-4c52-931e-fc6f5d6bf546",
+        "root": false,
+        "$title": "Deseja atendimento?",
+        "$position": { "top": "735px", "left": "861px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "d6e539c8-d451-4539-80fa-55309441a728": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "3b713ed4-9656-402e-9077-17f1ddbb6d12",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:4990",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "66c15eff-7099-4c6d-a462-0de7f142808d",
+                "$connId": "con_148",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["true"],
+                        "$$hashKey": "object:10111",
+                        "variable": "isHoliday@option"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:10102"
+            },
+            {
+                "stateId": "fcf9696d-12e6-4d12-809e-2fb4a1d2447a",
+                "$connId": "con_153",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:10723"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:10715"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "ExecuteScript",
+                "$title": "Check is holiday",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run() \n{\n    var isHoliday = { \"option\": true, \"trackAction\": \"Feriado\" };\n    var isNotHoliday = { \"option\": false, \"trackAction\": \"Nao feriado\" };\n\n    try\n    {\n        var today = new Date();\n        var day = today.getDate().toString().padStart(2, \"0\");\n        var month = (today.getMonth() + 1).toString().padStart(2, \"0\");\n        var date = `${day}/${month}`;\n        var holidays = \"{{resource.Holidays}}\".replace(' ', '').split(',');\n        return (holidays.includes(date)) ? isHoliday : isNotHoliday;\n    }\n    catch (ex)\n    {\n        return isNotHoliday;\n    }\n}",
+                    "inputVariables": [],
+                    "outputVariable": "isHoliday"
+                },
+                "conditions": []
+            },
+            {
+                "type": "TrackEvent",
+                "$title": "Transbordo dia de feriado | isHoliday@trackAction",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "WhatsApp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "Whatsapp": "{{whatsappNumber}}"
+                    },
+                    "category": "Transbordo dia de feriado",
+                    "action": "{{isHoliday@trackAction}}"
+                },
+                "conditions": [
+                    {
+                        "$$hashKey": "object:8499",
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "isHoliday@trackAction"
+                    }
+                ]
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "d6e539c8-d451-4539-80fa-55309441a728",
+        "root": false,
+        "$title": "Verifica feriado",
+        "$position": { "top": "276px", "left": "773px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "71cb2aa1-2915-4547-bc9a-10c2c81f5b0a": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "a52e1245-d5cd-476d-9e94-94e5e7ba9b39",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:11113",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "d6e539c8-d451-4539-80fa-55309441a728",
+                "$connId": "con_158",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:11446"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:11437"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "71cb2aa1-2915-4547-bc9a-10c2c81f5b0a",
+        "root": false,
+        "$title": "Verifica redirecionamento",
+        "$position": { "top": "207px", "left": "1010px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "134c668c-151d-4823-a596-76f3cc1d7454": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "614e2424-05db-44ef-a049-2fdff971edcd",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:8448",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "ExecuteScript",
+                "$title": "Set errorRetry",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(errorRetry) {\n    return parseInt(errorRetry) + 1 || 1;\n}",
+                    "inputVariables": ["errorRetry"],
+                    "outputVariable": "errorRetry"
+                },
+                "conditions": []
+            },
+            {
+                "type": "SetVariable",
+                "$title": "Set jsonFormat",
+                "$invalid": false,
+                "settings": {
+                    "variable": "jsonFormat",
+                    "value": "{\"origin\":\"transbordo\",\"destination\":\"#Tratativas\",\"userInput\":{{input.content}},\"previousStateId\":\"{{state.previous.id}}\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": {
+                        "type": "text/plain",
+                        "value": "{{jsonFormat}}"
+                    },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "134c668c-151d-4823-a596-76f3cc1d7454",
+        "root": false,
+        "$title": "Redireciona Formatos não suportados",
+        "$position": { "top": "620px", "left": "1442px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "512db791-b7e8-4c9a-be1f-70b1f56a0211": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "531299e3-1bb5-4133-9cf8-e297009cd3b5",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:2849",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "SetVariable",
+                "$title": "Set jsonNlp",
+                "$invalid": false,
+                "settings": {
+                    "variable": "jsonNlp",
+                    "value": "{\"origin\":\"transbordo\",\"destination\":\"#NLP\",\"destinationFlow\": \"N.2.0.0\",\"userInput\":\"{{input.content}}\", \"previousStateId\":\"{{state.previous.id}}\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": { "type": "text/plain", "value": "{{jsonNlp}}" },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "512db791-b7e8-4c9a-be1f-70b1f56a0211",
+        "root": false,
+        "$title": "Redireciona NLP - Atendente",
+        "$position": { "top": "456px", "left": "1438.67px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "b7c7ed7f-2324-426c-8f4e-2e4d6d46f8c3": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "ad47ef4e-6457-42fa-99a6-72b53525df0a",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:2482",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [
+            {
+                "type": "SetVariable",
+                "$title": "Set jsonNlp",
+                "$invalid": false,
+                "settings": {
+                    "variable": "jsonNlp",
+                    "value": "{\"origin\":\"transbordo\",\"destination\":\"#NLP\",\"destinationFlow\": \"N.1.0.0\",\"userInput\":\"{{input.content}}\", \"previousStateId\":\"{{state.previous.id}}\",\"previousStateName\":\"{{state.previous.name}}\"}"
+                },
+                "conditions": []
+            },
+            {
+                "type": "Redirect",
+                "$title": "Redirecionar a um serviço",
+                "$invalid": false,
+                "settings": {
+                    "context": { "type": "text/plain", "value": "{{jsonNlp}}" },
+                    "address": "driver"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#FF4A1E",
+                "label": "SetVariable",
+                "id": "blip-tag-bac9a02e-53dc-612f-4657-dd1611302740",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#1EA1FF",
+                "label": "Redirect",
+                "id": "blip-tag-b950cbb0-c9cb-8931-5a5f-cb865fc0c469",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "b7c7ed7f-2324-426c-8f4e-2e4d6d46f8c3",
+        "root": false,
+        "$title": "Redireciona NLP - Sair",
+        "$position": { "top": "290px", "left": "1440px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "8dcd75fe-393a-4e67-bf15-e17e954496d6": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "1f5db124-3b38-436a-8afd-dcbf6f983c4a",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:6191",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "f284df44-8d19-42a8-b2ae-a16c9b9f7ae3",
+                "$connId": "con_163",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["Inatividade Cliente"],
+                        "$$hashKey": "object:2194",
+                        "variable": "tagClose"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:2186"
+            },
+            {
+                "stateId": "7feb3a37-0e5a-4f1e-9054-c18231187a55",
+                "$connId": "con_168",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:9578"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:9570"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Retorno Transbordo",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "Whatsapp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "WhatsApp": "{{whatsappNumber}}"
+                    },
+                    "category": "Retorno transbordo",
+                    "action": "Quantidade"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ProcessHttp",
+                "$title": "Unsubscribe Ticket Monitor",
+                "$invalid": false,
+                "settings": {
+                    "headers": { "X-Blip-User": "{{tunnel.identity}}" },
+                    "method": "POST",
+                    "body": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n}",
+                    "uri": "{{config.apiTicket}}/v1/UserSubscriber/Unsubscribe?botIdentity={{config.botIdentity}}",
+                    "responseStatusVariable": "ticketUnsubscribeStatus",
+                    "responseBodyVariable": "ticketUnsubscribeResponse"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ProcessHttp",
+                "$title": "Get ticket from desk",
+                "$invalid": false,
+                "settings": {
+                    "headers": { "Authorization": "{{config.key}}" },
+                    "method": "POST",
+                    "body": "{\n  \"id\": \"{{random.integer}}\",\n  \"to\": \"postmaster@desk.msging.net\",\n  \"method\": \"get\",\n  \"uri\": \"/tickets?$take=1&customerIdentity={{contact.identity}}\"\n}",
+                    "uri": "https://msging.net/commands",
+                    "responseStatusVariable": "deskTicketStatus",
+                    "responseBodyVariable": "deskTicketResponse"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Get tagClose",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(deskTicketResponse) \n{\n    var responseBody = JSON.parse(deskTicketResponse);\n    if (responseBody)\n    {\n        try\n        {\n            return responseBody.resource.items[0].tags[0];\n        }\n        catch(ex)\n        {\n            return \"Tag nao disponivel\";\n        }\n    }\n    return \"\";\n}",
+                    "inputVariables": ["deskTicketResponse"],
+                    "outputVariable": "tagClose"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Encode agentIdentity",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(ticket) \n{\n    try\n    {\n        ticket = JSON.parse(ticket);\n        return encodeURI(ticket.resource.items[0].agentIdentity);\n    }\n    catch (ex)\n    {\n        return \"\";\n    }\n}",
+                    "inputVariables": ["deskTicketResponse"],
+                    "outputVariable": "agentIdentity"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ProcessHttp",
+                "$title": "Get attendant",
+                "$invalid": false,
+                "settings": {
+                    "headers": {
+                        "Content-Type": "application/json",
+                        "Authorization": "{{config.key}}"
+                    },
+                    "method": "POST",
+                    "body": "{\n  \"id\": \"{{random.guid}}\",\n  \"to\": \"postmaster@desk.msging.net\",\n  \"method\": \"get\",\n  \"uri\": \"/attendants?$filter=identity%20eq%20'{{agentIdentity}}'\"\n}",
+                    "uri": "https://msging.net/commands",
+                    "responseStatusVariable": "attendantStatus",
+                    "responseBodyVariable": "attendantResponse"
+                },
+                "conditions": []
+            },
+            {
+                "type": "ExecuteScript",
+                "$title": "Set attendantName",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(attendant) \n{\n    try\n    {\n        json = JSON.parse(attendant)\n        return json.resource.items[0].fullname;\n    }\n    catch (ex)\n    {\n        return \"\";\n    }\n}",
+                    "inputVariables": ["attendantResponse"],
+                    "outputVariable": "attendantName"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#2cc3d5",
+                "label": "ProcessHttp",
+                "id": "blip-tag-c43b236b-a1e7-31e8-fe2a-1f63b9e5507a",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#FF961E",
+                "label": "ExecuteScript",
+                "id": "blip-tag-66ff6a20-cbe0-b259-becc-3718c7bc9246",
+                "canChangeBackground": false
+            },
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "8dcd75fe-393a-4e67-bf15-e17e954496d6",
+        "root": false,
+        "$title": "Verifica encerramento",
+        "$position": { "top": "1140px", "left": "855px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "f284df44-8d19-42a8-b2ae-a16c9b9f7ae3": {
+        "$contentActions": [
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "7dcd4c18-23e3-48cd-ad75-110268cd86a0",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "7dcd4c18-23e3-48cd-ad75-110268cd86a0",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4380"
+            },
+            {
+                "action": {
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "fb14e2ed-2a7e-46c0-bcfd-9182660977a9",
+                        "type": "text/plain",
+                        "content": "Seu atendimento com {{attendantName}} acabou de ser finalizado. 🙂"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "fb14e2ed-2a7e-46c0-bcfd-9182660977a9",
+                            "type": "text/plain",
+                            "content": "Seu atendimento com {{attendantName}} acabou de ser finalizado. 🙂"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4381"
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "e8a8f37c-792f-4a08-828a-e46c1c810e20",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$$hashKey": "object:4062",
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "1cd88a06-2732-493d-8ffd-cb9810dba3c9",
+                "$connId": "con_173",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:21883"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:21874"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "type": "TrackEvent",
+                "$title": "Validacao encerramento api | Sim",
+                "$invalid": false,
+                "settings": {
+                    "extras": {
+                        "Nome Completo": "{{contact.name}}",
+                        "Whatsapp": "{{whatsappNumber}}",
+                        "Telefone digitado": "{{phoneNumber}}",
+                        "CPF": "{{cpf}}",
+                        "CEP": "{{zipcode}}",
+                        "Loja escolhida": "{{placeSelected@name}}",
+                        "Ponto de Origem": "{{state.previous.name}}",
+                        "Id Mensagem": "{{input.message.id}}",
+                        "Texto digitado": "{{input.content}}",
+                        "WhatsApp": "{{whatsappNumber}}"
+                    },
+                    "category": "Validacao encerramento api",
+                    "action": "Sim"
+                },
+                "conditions": []
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [
+            {
+                "background": "#61D36F",
+                "label": "TrackEvent",
+                "id": "blip-tag-e1081e22-cefb-71d9-8ff1-7aa03e9216a8",
+                "canChangeBackground": false
+            }
+        ],
+        "id": "f284df44-8d19-42a8-b2ae-a16c9b9f7ae3",
+        "root": false,
+        "$title": "Encerramento inatividade",
+        "$position": { "top": "1303px", "left": "626px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    }
+}
