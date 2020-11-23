@@ -1,5 +1,7 @@
 # Documentações
 
+![docs](https://i.imgur.com/jwCL8HFm.png)
+
 Toda e qualquer documentação / boa prática que norteia a construção e a utilização das peças maiores: componentes e Skills.
 
 ## Guia de Skills para UX
