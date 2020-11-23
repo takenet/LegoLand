@@ -1,6 +1,7 @@
 # Agendamento
 
-Consulta fornecedores próximos ao usuário e faz o agendamento de um serviço mecânico.
+Esse fluxo consulta fornecedores próximos ao usuário e faz o agendamento de um serviço mecânico.
+Para funcionar, depende de banco de dados de fornecedores.
 
 | Informações |                             |
 |-------------|-----------------------------|
