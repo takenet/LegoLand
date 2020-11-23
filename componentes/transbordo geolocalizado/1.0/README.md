@@ -5,7 +5,7 @@ Caso esteja disponível, procede com o transbordo do usuário para o atendimento
 
 | Informações |                                          |
 |-------------|------------------------------------------|
-| **Versão**  | 2.0                                      |
+| **Versão**  | 1.0                                      |
 | **Idioma**  | pt-BR                                    |
 | **Figma**   | [.fig](./transbordo-geolocalizado.fig)   |
 | **Fluxo**   | [.svg](./transbordo-geolocalizado.svg)   |
