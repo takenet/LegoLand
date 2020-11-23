@@ -8,5 +8,7 @@ Para funcionar, depende de banco de dados de fornecedores.
 | **Versão**  | 1.0                         |
 | **Idioma**  | pt-BR                       |
 | **Figma**   | [.fig](./agendamento.fig)   |
-| **Fluxo**   | [.pdf](./agendamento.pdf)   |
+| **Fluxo**   | [.svg](./agendamento.svg)   |
 | **Código**  | [.json](./agendamento.json) |
+
+![fluxo](./agendamento.svg)
