@@ -22,7 +22,7 @@ Tarefas mínimas independentes que não endereçam diretamente um problema do us
 
 ![skill-lego](https://i.imgur.com/FJq0PJBt.png)
 
-Tarefas embasadas em `Jobs to Be Done`, orientadas à dores do usuário. Cada skill é um chatbot, o [Contato Inteligente](#Contato%20Inteligente) é composto por várias skills.
+Tarefas embasadas em `Jobs to Be Done`, orientadas à dores do usuário. Cada skill é um chatbot, o [Contato Inteligente](#contato-inteligente) é composto por várias skills.
 
 ### Contato Inteligente
 
