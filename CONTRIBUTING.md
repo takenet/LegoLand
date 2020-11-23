@@ -16,7 +16,6 @@ Compartilhe!
 
 Um trecho de fluxo que faça uma validação, que trate de exceção ou um processo secundário mas que pode ser reutilizado em outros cenários... Apresente seu material na Legoland
 
-
 [Envie seu componente](https://form.asana.com/?k=3IZDGhCI3fhGUvr7O6uC-g&d=15292640478948)
 
 ## Skills
