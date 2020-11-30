@@ -1,0 +1,1266 @@
+{
+    "onboarding": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "e4f351bc-1418-4372-bcbf-27ccefb2367c",
+                            "type": "text/plain",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": false,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "f55c09b2-37cf-45fc-adc8-2abbb2dedcf7",
+                "$connId": "con_3",
+                "$id": "e19c794b-e234-459e-aaa4-aa881c019d4b",
+                "conditions": [
+                    { "source": "input", "comparison": "exists", "values": [] }
+                ],
+                "$invalid": false
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "onboarding",
+        "root": true,
+        "$position": { "top": "66px", "left": "612px" },
+        "$title": "Início",
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "fallback": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "ff6a93ed-3f28-4c10-b16e-a1b0e0a64386",
+                            "type": "text/plain"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "error",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "matches",
+                        "values": [".*"]
+                    }
+                ],
+                "$id": "cf8bf156-12af-4c69-9e58-b6a1913bcaa1",
+                "$connId": "con_8",
+                "$invalid": false
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [],
+        "id": "fallback",
+        "$position": { "top": "70px", "left": "872px" },
+        "$title": "Exceções",
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "welcome": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "89eecff2-29fe-4762-a327-5d2295b89c24",
+                            "type": "text/plain",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:4298"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "270e4115-8304-4e9f-85d4-750bcc5ba130",
+                "$connId": "con_13",
+                "$id": "fbbb2a72-f074-4031-9157-4a287362b255",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["A"],
+                        "variable": "abGroup",
+                        "$$hashKey": "object:4513"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:4488"
+            },
+            {
+                "stateId": "3a0ed88b-4fa3-43b8-8e1f-15dea5c9bdce",
+                "$connId": "con_18",
+                "$id": "06593f8b-c178-42ad-8b7d-a059a2c9e537",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["B"],
+                        "variable": "abGroup",
+                        "$$hashKey": "object:4540"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:4489"
+            },
+            {
+                "stateId": "a2fc10c9-63bf-42c2-bc7a-52f5162b969e",
+                "$connId": "con_23",
+                "$id": "dbd1a9c5-1d10-48b2-ada1-b1479e42fd75",
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["C"],
+                        "variable": "abGroup",
+                        "$$hashKey": "object:4567"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:4490"
+            }
+        ],
+        "$enteringCustomActions": [
+            {
+                "$id": "cd724c1e-09ac-4abe-bd6b-0b327cd8378a",
+                "type": "SetVariable",
+                "$title": "abGroup fallback",
+                "$invalid": false,
+                "settings": { "variable": "abGroup", "value": "C" },
+                "conditions": []
+            },
+            {
+                "$id": "716f97cf-b4a1-4ecc-9e8c-8cb60adf1b68",
+                "type": "ExecuteScript",
+                "$title": "Set abGroup by percent",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "const MAX_RAND = 100;\n\nfunction run(ab_test_config) {\n    const {\n        options: { percent },\n    } = JSON.parse(ab_test_config);\n\n    // If percent is 0 the A flow is disabled\n    if (percent == 0) {\n        return 'B';\n    }\n\n    // We add 1 to range on 1-100\n    const rand = Math.floor(Math.random() * MAX_RAND) + 1;\n\n    return rand <= percent ? 'A' : 'B';\n}",
+                    "inputVariables": ["abTestConfig"],
+                    "outputVariable": "abGroup"
+                },
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig",
+                        "$$hashKey": "object:16419"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "abTestConfig@type",
+                        "values": ["percent"],
+                        "$$hashKey": "object:16420"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig@options.percent",
+                        "$$hashKey": "object:16421"
+                    }
+                ]
+            },
+            {
+                "$id": "b4b36288-1de4-4670-a472-269e1e1d74e3",
+                "type": "ProcessCommand",
+                "$title": "Try get on group a",
+                "$invalid": false,
+                "settings": {
+                    "to": "postmaster@broadcast.msging.net",
+                    "method": "get",
+                    "uri": "/lists/{{abTestConfig@options.groups.a}}/recipients/{{contact.identity}}",
+                    "variable": "tryGetGroupA"
+                },
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig",
+                        "$$hashKey": "object:15215"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "abTestConfig@type",
+                        "values": ["groups"],
+                        "$$hashKey": "object:15216"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig@options.groups.a",
+                        "$$hashKey": "object:15217"
+                    }
+                ]
+            },
+            {
+                "$id": "bc8ad12c-8f08-4424-8ffb-77899a4935e0",
+                "type": "ProcessCommand",
+                "$title": "Try get on group b",
+                "$invalid": false,
+                "settings": {
+                    "to": "postmaster@broadcast.msging.net",
+                    "method": "get",
+                    "uri": "/lists/{{abTestConfig@options.groups.b}}/recipients/{{contact.identity}}",
+                    "variable": "tryGetGroupB"
+                },
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig",
+                        "$$hashKey": "object:15379"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["groups"],
+                        "variable": "abTestConfig@type",
+                        "$$hashKey": "object:15380"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig@options.groups.b",
+                        "$$hashKey": "object:15381"
+                    }
+                ]
+            },
+            {
+                "$id": "6c0f5b33-f557-431f-91a9-32edd9c50ebd",
+                "type": "ExecuteScript",
+                "$title": "Set abGroup by group",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "const SUCCESS = 'success';\n\nfunction run(try_get_group_a, try_get_group_b) {\n    const group_a = JSON.parse(try_get_group_a);\n    if (group_a.status === SUCCESS) {\n        return 'A';\n    }\n\n    const group_b = JSON.parse(try_get_group_b);\n    if (group_b.status === SUCCESS) {\n        return 'B';\n    }\n\n    return 'C';\n}",
+                    "inputVariables": ["tryGetGroupA", "tryGetGroupB"],
+                    "outputVariable": "abGroup"
+                },
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig",
+                        "$$hashKey": "object:11229"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "abTestConfig@type",
+                        "values": ["groups"],
+                        "$$hashKey": "object:11230"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "tryGetGroupA",
+                        "$$hashKey": "object:11231"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "tryGetGroupB",
+                        "$$hashKey": "object:11232"
+                    }
+                ]
+            },
+            {
+                "$id": "00947fca-6c24-459c-ad04-8aa56b942cdc",
+                "type": "ProcessCommand",
+                "$title": "Try get on selected group",
+                "$invalid": false,
+                "settings": {
+                    "to": "postmaster@broadcast.msging.net",
+                    "method": "get",
+                    "uri": "/lists/{{abTestConfig@options.selected}}/recipients/{{contact.identity}}",
+                    "variable": "tryGetSelectedGroup"
+                },
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig",
+                        "$$hashKey": "object:9389"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "variable": "abTestConfig@type",
+                        "values": ["selected"],
+                        "$$hashKey": "object:9390"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig@options.selected",
+                        "$$hashKey": "object:9391"
+                    }
+                ]
+            },
+            {
+                "$id": "332c4a3b-5917-493f-9561-c8a65aabcd7c",
+                "type": "ExecuteScript",
+                "$title": "Set abGroup by selected",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "const SUCCESS = 'success';\n\nfunction run(try_get_selected_group) {\n    const { status } = JSON.parse(try_get_selected_group);\n\n    return status === SUCCESS ? 'A' : 'B';\n}",
+                    "inputVariables": ["tryGetSelectedGroup"],
+                    "outputVariable": "abGroup"
+                },
+                "conditions": [
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "abTestConfig",
+                        "$$hashKey": "object:9527"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "equals",
+                        "values": ["selected"],
+                        "variable": "abTestConfig@type",
+                        "$$hashKey": "object:9528"
+                    },
+                    {
+                        "source": "context",
+                        "comparison": "exists",
+                        "values": [],
+                        "variable": "tryGetSelectedGroup",
+                        "$$hashKey": "object:9529"
+                    }
+                ]
+            }
+        ],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "welcome",
+        "$position": { "top": "325px", "left": "457px" },
+        "$title": "[Component] A/B Input",
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "error": {
+        "$contentActions": [
+            {
+                "action": {
+                    "$id": "475a7632-8127-45b8-9c09-407121303ce7",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "00000000-0000-0000-0000-000000000002",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "00000000-0000-0000-0000-000000000002",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left",
+                        "editing": false
+                    }
+                },
+                "$invalid": false
+            },
+            {
+                "action": {
+                    "$id": "c05cb147-eae2-42e2-82fd-560d32121b5b",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "00000000-0000-0000-0000-000000000003",
+                        "type": "text/plain",
+                        "content": "Desculpe, não consegui entender!"
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "00000000-0000-0000-0000-000000000003",
+                            "type": "text/plain",
+                            "content": "Desculpe, não consegui entender!"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left",
+                        "editing": false
+                    }
+                },
+                "$invalid": false
+            },
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "dd7a7d1c-d659-492c-bb47-169cbdcfeb8e",
+                            "type": "text/plain"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "onboarding", "$invalid": false },
+        "$tags": [],
+        "id": "error",
+        "$position": { "top": "199px", "left": "872px" },
+        "$title": "Erro padrão",
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "270e4115-8304-4e9f-85d4-750bcc5ba130": {
+        "$contentActions": [
+            {
+                "action": {
+                    "$id": "296ae955-4cab-4dd1-af00-da49a5aca47b",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "d1717584-57e5-4c09-8b22-4c124354ef67",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "d1717584-57e5-4c09-8b22-4c124354ef67",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5854"
+            },
+            {
+                "action": {
+                    "$id": "ff60d536-a5e6-49d4-a31e-2e2477829599",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "bad96ff6-15c8-4203-836b-a58bd02e8494",
+                        "type": "text/plain",
+                        "content": "Flow A",
+                        "metadata": {}
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "bad96ff6-15c8-4203-836b-a58bd02e8494",
+                            "type": "text/plain",
+                            "content": "Flow A"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5855"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "363bc00f-a1aa-4b51-9369-64f472a08384",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5856"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "6f4f64f8-5324-4b0e-bc2c-8e9e773bbb4c",
+                "$connId": "con_28",
+                "$id": "8f1397e4-f61c-47b5-94f0-edbe192ace6e",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:6072"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:6053"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "270e4115-8304-4e9f-85d4-750bcc5ba130",
+        "root": false,
+        "$title": "Flow A",
+        "$position": { "top": "479px", "left": "121px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "3a0ed88b-4fa3-43b8-8e1f-15dea5c9bdce": {
+        "$contentActions": [
+            {
+                "action": {
+                    "$id": "f9411dc1-d728-41e3-97c6-6ddd4e487c13",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "76c582c5-1daa-4a44-b8ac-230f1a742338",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "76c582c5-1daa-4a44-b8ac-230f1a742338",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5448"
+            },
+            {
+                "action": {
+                    "$id": "eff1cfa4-0ecb-4c49-829f-5280f8f9b340",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "d706f94d-6747-4561-a6f0-8dc76498a8b7",
+                        "type": "text/plain",
+                        "content": "Flow B",
+                        "metadata": {}
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "d706f94d-6747-4561-a6f0-8dc76498a8b7",
+                            "type": "text/plain",
+                            "content": "Flow B"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5449"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "c5e65ea3-4cb6-426e-b15c-7596d4830ba0",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:5450"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "6f4f64f8-5324-4b0e-bc2c-8e9e773bbb4c",
+                "$connId": "con_33",
+                "$id": "8e95eb2a-69f7-4464-b891-b416920ccb7a",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:5666"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:5647"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "3a0ed88b-4fa3-43b8-8e1f-15dea5c9bdce",
+        "root": false,
+        "$title": "Flow B",
+        "$position": { "top": "477px", "left": "457px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "a2fc10c9-63bf-42c2-bc7a-52f5162b969e": {
+        "$contentActions": [
+            {
+                "action": {
+                    "$id": "8d73e2b5-d671-40d1-9b43-f8aa35136fe9",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "b8dbc826-8083-4b49-b4bc-1e59a092f346",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "b8dbc826-8083-4b49-b4bc-1e59a092f346",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:6260"
+            },
+            {
+                "action": {
+                    "$id": "93d7a0c6-de0b-4d21-8479-46409621306f",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "a4ce4b8e-ecaf-490b-b0fb-90bfc4edb5a2",
+                        "type": "text/plain",
+                        "content": "[Fallback] Flow C",
+                        "metadata": {}
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "a4ce4b8e-ecaf-490b-b0fb-90bfc4edb5a2",
+                            "type": "text/plain",
+                            "content": "[Fallback] Flow C"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:6261"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "8f5af224-d4a9-4949-9f7b-bbeb511c77e2",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:6262"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "6f4f64f8-5324-4b0e-bc2c-8e9e773bbb4c",
+                "$connId": "con_38",
+                "$id": "7db21ff2-eb94-4a46-b1de-69150dafe379",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:6478"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:6459"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "a2fc10c9-63bf-42c2-bc7a-52f5162b969e",
+        "root": false,
+        "$title": "[Fallback] Flow C",
+        "$position": { "top": "474px", "left": "793px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "6f4f64f8-5324-4b0e-bc2c-8e9e773bbb4c": {
+        "$contentActions": [
+            {
+                "input": {
+                    "bypass": true,
+                    "$cardContent": {
+                        "document": {
+                            "id": "13eb4d4b-471a-4984-9d5a-c591a1232256",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:7067"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "8468fa85-a380-42e3-b822-52b70c82c4e2",
+                "$connId": "con_43",
+                "$id": "cc232062-5655-4fd2-a15c-4c5cb02e74e6",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:7258"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:7239"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "6f4f64f8-5324-4b0e-bc2c-8e9e773bbb4c",
+        "root": false,
+        "$title": "[Component] A/B Output",
+        "$position": { "top": "648px", "left": "457px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "8468fa85-a380-42e3-b822-52b70c82c4e2": {
+        "$contentActions": [
+            {
+                "action": {
+                    "$id": "6a9ba553-1166-475d-a85b-31d24283be3e",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "89f10043-19dd-4275-a64a-df84e6d00333",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "89f10043-19dd-4275-a64a-df84e6d00333",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:7446"
+            },
+            {
+                "action": {
+                    "$id": "c0796348-e200-4d6d-9ba5-d957164b38e3",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "83e952ff-4fe5-487b-9c9b-d9d929faff69",
+                        "type": "text/plain",
+                        "content": "Back to normal flow",
+                        "metadata": {}
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "83e952ff-4fe5-487b-9c9b-d9d929faff69",
+                            "type": "text/plain",
+                            "content": "Back to normal flow"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:7447"
+            },
+            {
+                "action": {
+                    "$id": "da99322c-3724-4ca5-9aa9-bd2074a6e5fd",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "ab2823e8-b47b-4e8c-8578-e4ba026b9606",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "ab2823e8-b47b-4e8c-8578-e4ba026b9606",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:13180"
+            },
+            {
+                "action": {
+                    "$id": "5810961e-62f0-47d5-b9f2-049798361d0a",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "e76407c8-f94d-445d-b066-fcac14c5be80",
+                        "type": "text/plain",
+                        "content": "You were at group {{abGroup}}",
+                        "metadata": {}
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "e76407c8-f94d-445d-b066-fcac14c5be80",
+                            "type": "text/plain",
+                            "content": "You were at group {{abGroup}}"
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:13181"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "5d1b0809-ef85-4669-ac8f-7ec80a26f4d9",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:7448"
+            }
+        ],
+        "$conditionOutputs": [],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [],
+        "$inputSuggestions": [],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "8468fa85-a380-42e3-b822-52b70c82c4e2",
+        "root": false,
+        "$title": "Normal flow",
+        "$position": { "top": "789px", "left": "457px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    },
+    "f55c09b2-37cf-45fc-adc8-2abbb2dedcf7": {
+        "$contentActions": [
+            {
+                "action": {
+                    "$id": "82d59d82-bce8-4177-a9d2-a98125cafada",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "304cf27d-d4b2-4574-bbfc-2cc3bfe35c64",
+                        "type": "application/vnd.lime.chatstate+json",
+                        "content": { "state": "composing", "interval": 1000 }
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "304cf27d-d4b2-4574-bbfc-2cc3bfe35c64",
+                            "type": "application/vnd.lime.chatstate+json",
+                            "content": {
+                                "state": "composing",
+                                "interval": 1000
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3740"
+            },
+            {
+                "action": {
+                    "$id": "9851163c-660f-453b-886e-67ea44e29aee",
+                    "type": "SendMessage",
+                    "settings": {
+                        "id": "9dd7683b-45d8-48ac-8080-08263c6a2a7f",
+                        "type": "application/vnd.lime.select+json",
+                        "content": {
+                            "text": "Select wich a/b type test you want",
+                            "scope": "immediate",
+                            "options": [
+                                {
+                                    "text": "percent - 60%",
+                                    "previewText": "percent - 60%",
+                                    "value": null,
+                                    "index": 0,
+                                    "type": null
+                                },
+                                {
+                                    "text": "groups - a",
+                                    "previewText": "groups - a",
+                                    "value": null,
+                                    "index": 1,
+                                    "type": null
+                                },
+                                {
+                                    "index": 2,
+                                    "text": "groups - b",
+                                    "previewText": "groups - b",
+                                    "type": null,
+                                    "value": null
+                                },
+                                {
+                                    "index": 3,
+                                    "text": "groups - not set",
+                                    "previewText": "groups - not set",
+                                    "type": null,
+                                    "value": null
+                                },
+                                {
+                                    "index": -1,
+                                    "text": "selected - in",
+                                    "previewText": "selected - in",
+                                    "type": null,
+                                    "value": null
+                                },
+                                {
+                                    "index": -1,
+                                    "text": "selected - out",
+                                    "previewText": "selected - out",
+                                    "type": null,
+                                    "value": null
+                                }
+                            ]
+                        },
+                        "metadata": {}
+                    },
+                    "$cardContent": {
+                        "document": {
+                            "id": "9dd7683b-45d8-48ac-8080-08263c6a2a7f",
+                            "type": "application/vnd.lime.select+json",
+                            "content": {
+                                "text": "Select wich a/b type test you want",
+                                "scope": "immediate",
+                                "options": [
+                                    {
+                                        "text": "percent - 60%",
+                                        "previewText": "percent - 60%",
+                                        "value": null,
+                                        "index": 0,
+                                        "type": null
+                                    },
+                                    {
+                                        "text": "groups - a",
+                                        "previewText": "groups - a",
+                                        "value": null,
+                                        "index": 1,
+                                        "type": null
+                                    },
+                                    {
+                                        "index": 2,
+                                        "text": "groups - b",
+                                        "previewText": "groups - b",
+                                        "type": null,
+                                        "value": null
+                                    },
+                                    {
+                                        "index": 3,
+                                        "text": "groups - not set",
+                                        "previewText": "groups - not set",
+                                        "type": null,
+                                        "value": null
+                                    },
+                                    {
+                                        "index": -1,
+                                        "text": "selected - in",
+                                        "previewText": "selected - in",
+                                        "type": null,
+                                        "value": null
+                                    },
+                                    {
+                                        "index": -1,
+                                        "text": "selected - out",
+                                        "previewText": "selected - out",
+                                        "type": null,
+                                        "value": null
+                                    }
+                                ]
+                            }
+                        },
+                        "editable": true,
+                        "deletable": true,
+                        "position": "left"
+                    }
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3741"
+            },
+            {
+                "input": {
+                    "bypass": false,
+                    "$cardContent": {
+                        "document": {
+                            "id": "1fbb3939-ca4d-4f83-9193-be040822d581",
+                            "type": "text/plain",
+                            "textContent": "Entrada do usuário",
+                            "content": "Entrada do usuário"
+                        },
+                        "editable": false,
+                        "deletable": true,
+                        "position": "right",
+                        "editing": false
+                    },
+                    "$invalid": false
+                },
+                "$invalid": false,
+                "$$hashKey": "object:3742"
+            }
+        ],
+        "$conditionOutputs": [
+            {
+                "stateId": "welcome",
+                "$connId": "con_48",
+                "$id": "80ac33ba-c1a8-4535-9abd-885457923b48",
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "exists",
+                        "values": [],
+                        "$$hashKey": "object:3958"
+                    }
+                ],
+                "$invalid": false,
+                "$$hashKey": "object:3939"
+            }
+        ],
+        "$enteringCustomActions": [],
+        "$leavingCustomActions": [
+            {
+                "$id": "cb70237d-5fe3-499b-b3c4-ed6339a3f0e9",
+                "type": "ExecuteScript",
+                "$title": "Set abTestConfig",
+                "$invalid": false,
+                "settings": {
+                    "function": "run",
+                    "source": "function run(test_type) {\n    // you don't need to declare all options but we're doing here to make this showdown simple\n    return {\n        type: test_type.split('-')[0].trim(),\n        options: {\n            percent: 60,\n            selected: 'selected@broadcast.msging.net',\n            groups: {\n                a: 'group-a@broadcast.msging.net',\n                b: 'group-b@broadcast.msging.net'\n            }\n        }\n    };\n}",
+                    "inputVariables": ["input.content"],
+                    "outputVariable": "abTestConfig"
+                },
+                "conditions": []
+            },
+            {
+                "$id": "8c017b76-05a2-4d2a-be91-bea49f694fdc",
+                "type": "ManageList",
+                "$title": "Add to group A",
+                "$invalid": false,
+                "settings": {
+                    "listName": "group-a@broadcast.msging.net",
+                    "action": "Add"
+                },
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "equals",
+                        "values": ["groups - a"],
+                        "$$hashKey": "object:18761"
+                    }
+                ]
+            },
+            {
+                "$id": "46c5c83a-730c-4c66-b46b-4493a1595ae8",
+                "type": "ManageList",
+                "$title": "Add to group B",
+                "$invalid": false,
+                "settings": {
+                    "listName": "group-b@broadcast.msging.net",
+                    "action": "Add"
+                },
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "equals",
+                        "values": ["groups - b"],
+                        "$$hashKey": "object:18933"
+                    }
+                ]
+            },
+            {
+                "$id": "6f6c74f6-dc68-4b91-9be7-a294c10acc40",
+                "type": "ManageList",
+                "$title": "Add to selected",
+                "$invalid": false,
+                "settings": {
+                    "listName": "selected@broadcast.msging.net",
+                    "action": "Add"
+                },
+                "conditions": [
+                    {
+                        "source": "input",
+                        "comparison": "equals",
+                        "values": ["selected - in"]
+                    }
+                ]
+            }
+        ],
+        "$inputSuggestions": [
+            "percent - 60%",
+            "groups - a",
+            "groups - b",
+            "groups - not set",
+            "selected - in",
+            "selected - out"
+        ],
+        "$defaultOutput": { "stateId": "fallback", "$invalid": false },
+        "$tags": [],
+        "id": "f55c09b2-37cf-45fc-adc8-2abbb2dedcf7",
+        "root": false,
+        "$title": "Pre flow",
+        "$position": { "top": "180px", "left": "457px" },
+        "$invalidContentActions": false,
+        "$invalidOutputs": false,
+        "$invalidCustomActions": false,
+        "$invalid": false
+    }
+}
