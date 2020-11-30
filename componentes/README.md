@@ -8,3 +8,4 @@ Os componentes estão dispostos seguindo o nosso [template](./TEMPLATE.md).
 
 - [Transbordo Geolocalizado](./transbordo%20geolocalizado/2.0)
 - [Validador de CPF/CNPJ](./validador%20de%20cpf%20e%20cnpj/1.0)
+- [Teste A/B](./teste%20ab/1.0)
