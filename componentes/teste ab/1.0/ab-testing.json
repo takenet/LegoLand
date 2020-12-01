@@ -112,7 +112,7 @@
                     "$invalid": false
                 },
                 "$invalid": false,
-                "$$hashKey": "object:4298"
+                "$$hashKey": "object:3660"
             }
         ],
         "$conditionOutputs": [
@@ -126,11 +126,11 @@
                         "comparison": "equals",
                         "values": ["A"],
                         "variable": "abGroup",
-                        "$$hashKey": "object:4513"
+                        "$$hashKey": "object:3857"
                     }
                 ],
                 "$invalid": false,
-                "$$hashKey": "object:4488"
+                "$$hashKey": "object:3832"
             },
             {
                 "stateId": "3a0ed88b-4fa3-43b8-8e1f-15dea5c9bdce",
@@ -142,11 +142,11 @@
                         "comparison": "equals",
                         "values": ["B"],
                         "variable": "abGroup",
-                        "$$hashKey": "object:4540"
+                        "$$hashKey": "object:3884"
                     }
                 ],
                 "$invalid": false,
-                "$$hashKey": "object:4489"
+                "$$hashKey": "object:3833"
             },
             {
                 "stateId": "a2fc10c9-63bf-42c2-bc7a-52f5162b969e",
@@ -156,13 +156,13 @@
                     {
                         "source": "context",
                         "comparison": "equals",
-                        "values": ["C"],
+                        "values": ["FALLBACK"],
                         "variable": "abGroup",
-                        "$$hashKey": "object:4567"
+                        "$$hashKey": "object:3911"
                     }
                 ],
                 "$invalid": false,
-                "$$hashKey": "object:4490"
+                "$$hashKey": "object:3834"
             }
         ],
         "$enteringCustomActions": [
@@ -181,7 +181,7 @@
                 "$invalid": false,
                 "settings": {
                     "function": "run",
-                    "source": "const MAX_RAND = 100;\n\nfunction run(ab_test_config) {\n    const {\n        options: { percent },\n    } = JSON.parse(ab_test_config);\n\n    // If percent is 0 the A flow is disabled\n    if (percent == 0) {\n        return 'B';\n    }\n\n    // We add 1 to range on 1-100\n    const rand = Math.floor(Math.random() * MAX_RAND) + 1;\n\n    return rand <= percent ? 'A' : 'B';\n}",
+                    "source": "const MAX_RAND = 100;\n\nfunction run(ab_test_config) {\n    const {\n        options: { percent },\n    } = JSON.parse(ab_test_config);\n\n    // If percent is 0 the A flow is disabled\n    if (percent == 0) {\n        return 'FALLBACK';\n    }\n\n    // We add 1 to range on 1-100\n    const rand = Math.floor(Math.random() * MAX_RAND) + 1;\n\n    return rand <= percent ? 'A' : 'FALLBACK';\n}",
                     "inputVariables": ["abTestConfig"],
                     "outputVariable": "abGroup"
                 },
@@ -191,21 +191,21 @@
                         "comparison": "exists",
                         "values": [],
                         "variable": "abTestConfig",
-                        "$$hashKey": "object:16419"
+                        "$$hashKey": "object:4222"
                     },
                     {
                         "source": "context",
                         "comparison": "equals",
                         "variable": "abTestConfig@type",
                         "values": ["percent"],
-                        "$$hashKey": "object:16420"
+                        "$$hashKey": "object:4223"
                     },
                     {
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
                         "variable": "abTestConfig@options.percent",
-                        "$$hashKey": "object:16421"
+                        "$$hashKey": "object:4224"
                     }
                 ]
             },
@@ -225,22 +225,19 @@
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
-                        "variable": "abTestConfig",
-                        "$$hashKey": "object:15215"
+                        "variable": "abTestConfig"
                     },
                     {
                         "source": "context",
                         "comparison": "equals",
                         "variable": "abTestConfig@type",
-                        "values": ["groups"],
-                        "$$hashKey": "object:15216"
+                        "values": ["groups"]
                     },
                     {
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
-                        "variable": "abTestConfig@options.groups.a",
-                        "$$hashKey": "object:15217"
+                        "variable": "abTestConfig@options.groups.a"
                     }
                 ]
             },
@@ -260,22 +257,19 @@
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
-                        "variable": "abTestConfig",
-                        "$$hashKey": "object:15379"
+                        "variable": "abTestConfig"
                     },
                     {
                         "source": "context",
                         "comparison": "equals",
                         "values": ["groups"],
-                        "variable": "abTestConfig@type",
-                        "$$hashKey": "object:15380"
+                        "variable": "abTestConfig@type"
                     },
                     {
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
-                        "variable": "abTestConfig@options.groups.b",
-                        "$$hashKey": "object:15381"
+                        "variable": "abTestConfig@options.groups.b"
                     }
                 ]
             },
@@ -286,7 +280,7 @@
                 "$invalid": false,
                 "settings": {
                     "function": "run",
-                    "source": "const SUCCESS = 'success';\n\nfunction run(try_get_group_a, try_get_group_b) {\n    const group_a = JSON.parse(try_get_group_a);\n    if (group_a.status === SUCCESS) {\n        return 'A';\n    }\n\n    const group_b = JSON.parse(try_get_group_b);\n    if (group_b.status === SUCCESS) {\n        return 'B';\n    }\n\n    return 'C';\n}",
+                    "source": "const SUCCESS = 'success';\n\nfunction run(try_get_group_a, try_get_group_b) {\n    const group_a = JSON.parse(try_get_group_a);\n    if (group_a.status === SUCCESS) {\n        return 'A';\n    }\n\n    const group_b = JSON.parse(try_get_group_b);\n    if (group_b.status === SUCCESS) {\n        return 'B';\n    }\n\n    return 'FALLBACK';\n}",
                     "inputVariables": ["tryGetGroupA", "tryGetGroupB"],
                     "outputVariable": "abGroup"
                 },
@@ -296,28 +290,28 @@
                         "comparison": "exists",
                         "values": [],
                         "variable": "abTestConfig",
-                        "$$hashKey": "object:11229"
+                        "$$hashKey": "object:4409"
                     },
                     {
                         "source": "context",
                         "comparison": "equals",
                         "variable": "abTestConfig@type",
                         "values": ["groups"],
-                        "$$hashKey": "object:11230"
+                        "$$hashKey": "object:4410"
                     },
                     {
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
                         "variable": "tryGetGroupA",
-                        "$$hashKey": "object:11231"
+                        "$$hashKey": "object:4411"
                     },
                     {
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
                         "variable": "tryGetGroupB",
-                        "$$hashKey": "object:11232"
+                        "$$hashKey": "object:4412"
                     }
                 ]
             },
@@ -337,22 +331,19 @@
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
-                        "variable": "abTestConfig",
-                        "$$hashKey": "object:9389"
+                        "variable": "abTestConfig"
                     },
                     {
                         "source": "context",
                         "comparison": "equals",
                         "variable": "abTestConfig@type",
-                        "values": ["selected"],
-                        "$$hashKey": "object:9390"
+                        "values": ["selected"]
                     },
                     {
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
-                        "variable": "abTestConfig@options.selected",
-                        "$$hashKey": "object:9391"
+                        "variable": "abTestConfig@options.selected"
                     }
                 ]
             },
@@ -363,7 +354,7 @@
                 "$invalid": false,
                 "settings": {
                     "function": "run",
-                    "source": "const SUCCESS = 'success';\n\nfunction run(try_get_selected_group) {\n    const { status } = JSON.parse(try_get_selected_group);\n\n    return status === SUCCESS ? 'A' : 'B';\n}",
+                    "source": "const SUCCESS = 'success';\n\nfunction run(try_get_selected_group) {\n    const { status } = JSON.parse(try_get_selected_group);\n\n    return status === SUCCESS ? 'A' : 'FALLBACK';\n}",
                     "inputVariables": ["tryGetSelectedGroup"],
                     "outputVariable": "abGroup"
                 },
@@ -373,21 +364,21 @@
                         "comparison": "exists",
                         "values": [],
                         "variable": "abTestConfig",
-                        "$$hashKey": "object:9527"
+                        "$$hashKey": "object:4622"
                     },
                     {
                         "source": "context",
                         "comparison": "equals",
                         "values": ["selected"],
                         "variable": "abTestConfig@type",
-                        "$$hashKey": "object:9528"
+                        "$$hashKey": "object:4623"
                     },
                     {
                         "source": "context",
                         "comparison": "exists",
                         "values": [],
                         "variable": "tryGetSelectedGroup",
-                        "$$hashKey": "object:9529"
+                        "$$hashKey": "object:4624"
                     }
                 ]
             }
@@ -512,8 +503,7 @@
                         "position": "left"
                     }
                 },
-                "$invalid": false,
-                "$$hashKey": "object:5854"
+                "$invalid": false
             },
             {
                 "action": {
@@ -536,8 +526,7 @@
                         "position": "left"
                     }
                 },
-                "$invalid": false,
-                "$$hashKey": "object:5855"
+                "$invalid": false
             },
             {
                 "input": {
@@ -556,8 +545,7 @@
                     },
                     "$invalid": false
                 },
-                "$invalid": false,
-                "$$hashKey": "object:5856"
+                "$invalid": false
             }
         ],
         "$conditionOutputs": [
@@ -566,15 +554,9 @@
                 "$connId": "con_28",
                 "$id": "8f1397e4-f61c-47b5-94f0-edbe192ace6e",
                 "conditions": [
-                    {
-                        "source": "input",
-                        "comparison": "exists",
-                        "values": [],
-                        "$$hashKey": "object:6072"
-                    }
+                    { "source": "input", "comparison": "exists", "values": [] }
                 ],
-                "$invalid": false,
-                "$$hashKey": "object:6053"
+                "$invalid": false
             }
         ],
         "$enteringCustomActions": [],
@@ -616,8 +598,7 @@
                         "position": "left"
                     }
                 },
-                "$invalid": false,
-                "$$hashKey": "object:5448"
+                "$invalid": false
             },
             {
                 "action": {
@@ -640,8 +621,7 @@
                         "position": "left"
                     }
                 },
-                "$invalid": false,
-                "$$hashKey": "object:5449"
+                "$invalid": false
             },
             {
                 "input": {
@@ -660,8 +640,7 @@
                     },
                     "$invalid": false
                 },
-                "$invalid": false,
-                "$$hashKey": "object:5450"
+                "$invalid": false
             }
         ],
         "$conditionOutputs": [
@@ -670,15 +649,9 @@
                 "$connId": "con_33",
                 "$id": "8e95eb2a-69f7-4464-b891-b416920ccb7a",
                 "conditions": [
-                    {
-                        "source": "input",
-                        "comparison": "exists",
-                        "values": [],
-                        "$$hashKey": "object:5666"
-                    }
+                    { "source": "input", "comparison": "exists", "values": [] }
                 ],
-                "$invalid": false,
-                "$$hashKey": "object:5647"
+                "$invalid": false
             }
         ],
         "$enteringCustomActions": [],
@@ -721,7 +694,7 @@
                     }
                 },
                 "$invalid": false,
-                "$$hashKey": "object:6260"
+                "$$hashKey": "object:4811"
             },
             {
                 "action": {
@@ -730,14 +703,14 @@
                     "settings": {
                         "id": "a4ce4b8e-ecaf-490b-b0fb-90bfc4edb5a2",
                         "type": "text/plain",
-                        "content": "[Fallback] Flow C",
+                        "content": "[Fallback] Original flow",
                         "metadata": {}
                     },
                     "$cardContent": {
                         "document": {
                             "id": "a4ce4b8e-ecaf-490b-b0fb-90bfc4edb5a2",
                             "type": "text/plain",
-                            "content": "[Fallback] Flow C"
+                            "content": "[Fallback] Original flow"
                         },
                         "editable": true,
                         "deletable": true,
@@ -745,7 +718,7 @@
                     }
                 },
                 "$invalid": false,
-                "$$hashKey": "object:6261"
+                "$$hashKey": "object:4812"
             },
             {
                 "input": {
@@ -765,7 +738,7 @@
                     "$invalid": false
                 },
                 "$invalid": false,
-                "$$hashKey": "object:6262"
+                "$$hashKey": "object:4813"
             }
         ],
         "$conditionOutputs": [
@@ -778,11 +751,11 @@
                         "source": "input",
                         "comparison": "exists",
                         "values": [],
-                        "$$hashKey": "object:6478"
+                        "$$hashKey": "object:5029"
                     }
                 ],
                 "$invalid": false,
-                "$$hashKey": "object:6459"
+                "$$hashKey": "object:5010"
             }
         ],
         "$enteringCustomActions": [],
@@ -792,7 +765,7 @@
         "$tags": [],
         "id": "a2fc10c9-63bf-42c2-bc7a-52f5162b969e",
         "root": false,
-        "$title": "[Fallback] Flow C",
+        "$title": "[Fallback] Original flow",
         "$position": { "top": "474px", "left": "793px" },
         "$invalidContentActions": false,
         "$invalidOutputs": false,
@@ -818,8 +791,7 @@
                     },
                     "$invalid": false
                 },
-                "$invalid": false,
-                "$$hashKey": "object:7067"
+                "$invalid": false
             }
         ],
         "$conditionOutputs": [
@@ -828,15 +800,9 @@
                 "$connId": "con_43",
                 "$id": "cc232062-5655-4fd2-a15c-4c5cb02e74e6",
                 "conditions": [
-                    {
-                        "source": "input",
-                        "comparison": "exists",
-                        "values": [],
-                        "$$hashKey": "object:7258"
-                    }
+                    { "source": "input", "comparison": "exists", "values": [] }
                 ],
-                "$invalid": false,
-                "$$hashKey": "object:7239"
+                "$invalid": false
             }
         ],
         "$enteringCustomActions": [],
@@ -879,7 +845,7 @@
                     }
                 },
                 "$invalid": false,
-                "$$hashKey": "object:7446"
+                "$$hashKey": "object:5237"
             },
             {
                 "action": {
@@ -903,7 +869,7 @@
                     }
                 },
                 "$invalid": false,
-                "$$hashKey": "object:7447"
+                "$$hashKey": "object:5238"
             },
             {
                 "action": {
@@ -929,7 +895,7 @@
                     }
                 },
                 "$invalid": false,
-                "$$hashKey": "object:13180"
+                "$$hashKey": "object:5239"
             },
             {
                 "action": {
@@ -953,7 +919,7 @@
                     }
                 },
                 "$invalid": false,
-                "$$hashKey": "object:13181"
+                "$$hashKey": "object:5240"
             },
             {
                 "input": {
@@ -973,7 +939,7 @@
                     "$invalid": false
                 },
                 "$invalid": false,
-                "$$hashKey": "object:7448"
+                "$$hashKey": "object:5241"
             }
         ],
         "$conditionOutputs": [],
@@ -1017,7 +983,7 @@
                     }
                 },
                 "$invalid": false,
-                "$$hashKey": "object:3740"
+                "$$hashKey": "object:3226"
             },
             {
                 "action": {
@@ -1135,7 +1101,7 @@
                     }
                 },
                 "$invalid": false,
-                "$$hashKey": "object:3741"
+                "$$hashKey": "object:3227"
             },
             {
                 "input": {
@@ -1155,7 +1121,7 @@
                     "$invalid": false
                 },
                 "$invalid": false,
-                "$$hashKey": "object:3742"
+                "$$hashKey": "object:3228"
             }
         ],
         "$conditionOutputs": [
@@ -1168,11 +1134,11 @@
                         "source": "input",
                         "comparison": "exists",
                         "values": [],
-                        "$$hashKey": "object:3958"
+                        "$$hashKey": "object:3444"
                     }
                 ],
                 "$invalid": false,
-                "$$hashKey": "object:3939"
+                "$$hashKey": "object:3425"
             }
         ],
         "$enteringCustomActions": [],
@@ -1203,8 +1169,7 @@
                     {
                         "source": "input",
                         "comparison": "equals",
-                        "values": ["groups - a"],
-                        "$$hashKey": "object:18761"
+                        "values": ["groups - a"]
                     }
                 ]
             },
@@ -1221,8 +1186,7 @@
                     {
                         "source": "input",
                         "comparison": "equals",
-                        "values": ["groups - b"],
-                        "$$hashKey": "object:18933"
+                        "values": ["groups - b"]
                     }
                 ]
             },

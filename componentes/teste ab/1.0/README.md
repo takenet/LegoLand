@@ -1,13 +1,13 @@
 # Teste A/B
 
-Este componente faz a decisão de um teste A/B dentro do fluxo. Com ele é possivel decidir um fluxo a partir de uma porcentagem, grupo seleto de usuários ou dois grupos de usuários (com fallback para usuários não definidos em nenhum dos grupos).
+Este componente faz a decisão de um teste A/B dentro do fluxo. Com ele é possivel decidir um fluxo a partir de uma porcentagem, grupo seleto de usuários ou dois grupos de usuários com fallback para usuários não definidos em nenhum dos grupos (Teste A/B/C).
 
 | Informações |                            |
 |-------------|----------------------------|
 | **Versão**  | 1.0                        |
 | **Idioma**  | en-US                      |
-| **Figma**   | {{link para arquivo .fig}} |
-| **Fluxo**   | {{link para arquivo .svg}} |
+| **Figma**   | [.fig](./ab-testing.fig)   |
+| **Fluxo**   | [.svg](./ab-testing.svg)   |
 | **Código**  | [.json](./ab-testing.json) |
 
 ## Dependencias
@@ -72,6 +72,8 @@ Alguns exemplos de valores da váriavel `abTestConfig`
 
 ##### Fluxo com 85% dos usuários
 
+Aproximadamente 85% dos usuários serão direcionados para o fluxo `A` enquanto o restante será direcionado para o `FALLBACK`.
+
 ```json
 {
     "type": "percent",
@@ -83,6 +85,8 @@ Alguns exemplos de valores da váriavel `abTestConfig`
 
 ##### Fluxo para usuários de uma lista
 
+Todos os usuários presentes na [lista de distribuição][broadcast] serão direcionados para o fluxo `A` e o restante para o `FALLBACK`.
+
 ```json
 {
     "type": "selected",
@@ -93,6 +97,8 @@ Alguns exemplos de valores da váriavel `abTestConfig`
 ```
 
 ##### Fluxo diferentes para usuários especificos
+
+Usuários do grupo a serão direcionados para o fluxo `A` e do grupo b para o fluxo `B`, já os usuários que não pertencem a nenhuma das listas serão direcionados para o `FALLBACK`.
 
 ```json
 {
@@ -110,14 +116,14 @@ Alguns exemplos de valores da váriavel `abTestConfig`
 
 O componente vai direcionar o usuário baseado na váriavel `abGroup` que pode ter os seguintes valores:
 
-| Valor | Descrição                                                                                                                                                             |
-|-------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| A     | Usuário deve ir para o fluxo A                                                                                                                                        |
-| B     | Usuário deve ir para o fluxo B                                                                                                                                        |
-| C     | Caso alguma configuração não tenha sido passada ou foi utilizado o `type` `groups` e o usuário não pertence a nenhum dos dois grupos deve ir para o fluxo de fallback |
+| Valor    | Descrição                                       |
+|----------|-------------------------------------------------|
+| A        | Usuário deve ir para o fluxo A                  |
+| B        | Usuário deve ir para o fluxo B                  |
+| FALLBACK | Usuários que não estão dentro do fluxo de teste |
 
 ## Preview
 
-{{preview da imagem do fluxo do figma}}
+![ab-testing](ab-testing.svg)
 
 [broadcast]: https://docs.blip.ai/#broadcast
